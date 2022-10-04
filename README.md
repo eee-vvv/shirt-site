@@ -6,17 +6,24 @@
 
 ## MVP features
 
-- [ ] Users can browse shirts and add items to their carts without logging in
-- [ ] shopping cart persists between browser sessions even if a user is not logged in
-- [ ] There is a backend that holds inventory (shirts, images, quantities available, prices, etc.) and can receieve and respond to requests from user clients
-- [ ] The inventory is tagged in a way that allows shirts to be categorized, sorted, filtered, etc
-- [ ] There is a CMS (content management system) in place that allows admin to manage inventory and orders without our help
-- [ ] Users can checkout and securely process a transaction with card, paypal, apple pay, etc, without having an account
-- [ ] There is a test suite in place, development is TDD, and we have high test coverage of the product
-- [ ] Users can increase, decrease, or remove quantities of items from the shopping cart?
-- [ ] Users can't add items to their cart if there is not enough inventory
-- [ ] When a user adds an item to their cart, it puts the inventory item on hold?
-- [ ] When a user initiates a cart, a timer is set, at the end of which all of their items become available to all shoppers again and their cart is automatically emptied
+- [ ] **Dev Ops**
+  - [ ] Test suite in place, development is TDD, and we have high test coverage of the product
+- [ ] **Database**
+  - [ ] Inventory (shirts, images, sizing, prices, etc.)
+  - [ ] Cart
+  - [ ] User Session
+- [ ] **Shopping**
+  - [ ] Users can browse shirts and add items to their carts without logging in
+  - [ ] Cart
+    - [ ] Users can remove items from the shopping cart
+    - [ ] shopping cart persists between browser sessions (times out eventually)
+    - [ ] If an item has already been bought when user tries to check it out, they get a "nolonger available" message
+- [ ] **Payment**
+  - [ ] Users can checkout and securely process a transaction with card, paypal, apple pay, etc,
+- [ ] **CMS**
+  - [ ] allow admin to manage inventory and orders without our help
+
+
 
 ## Questions to ask Ruby
 
