@@ -28,6 +28,18 @@
 - pagination?
 - inspo sites
 
+## meeting notes
+- inventory is available until someone actually checks out with it
+
+### views
+- homepage is the shop with all products
+
+pages:
+- all products
+- single product
+- info
+- cart (maybe not a page but just a dropdown)
+
 ## Tech Stack
 
 - DB
