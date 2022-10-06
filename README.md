@@ -23,8 +23,6 @@
 - [ ] **CMS**
   - [ ] allow admin to manage inventory and orders without our help
 
-
-
 ## Questions to ask Ruby
 
 - do you want users to have accounts where their carts, info, etc are saved for convenient repeat purchases?
@@ -49,14 +47,16 @@ pages:
 
 ## Tech Stack
 
-- DB
-- Server (CRUD)
-- Frontend client (React (next?))
-- Deployment framework
-- production server environment
-- Payment management system
-- CMS for Ruby to manage inventory, order history, etc
-- test suite
-- potentially a user account tool (maybe stripe tbh)
-- state management (redux, context, something)
-- style (CSS modules, bootstrap, tailwind, SASS, etc)
+### "1st party"
+- Unit testing (React testing library + Jest)
+- Integration testing (Cypress)
+- Database: PSQL (pg.js)
+- Client side frameworks (react.js , next.js)
+- State management framework (react context)
+- Deployment framework (next.js)
+- Server-side framework (express)
+
+### "3rd party"
+- CMS: none
+- Payment system: (stripe)
+- Image storage: (google cloud storage)
