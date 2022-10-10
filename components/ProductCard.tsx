@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 
 type Props = {
@@ -9,10 +10,14 @@ type Props = {
 
 const ProductCard = ({ id, imageId, price, name }: Props) => {
   return (
-    <div>
-      <h2>{name}</h2>
-      <div>${price}</div>
-    </div>
+    <Link href={`/${id}`} >
+      <a>
+        <div>
+          <h2>{name}</h2>
+          <div>${price}</div>
+        </div>
+      </a>
+    </Link>
   );
 };
 
