@@ -1,5 +1,8 @@
 # README
 
+## Dev Database setup
+`createdb shirt-site-dev`
+
 **RESEARCH PAYMENT/SHOP/SHIPMENT TOOLS
 - ask on discord
 - probably stripe
