@@ -1,19 +1,10 @@
-const { Client } = require('pg');
+import { Client } from 'pg'
+import { Product } from '../../../interfaces'
 import type { NextApiRequest, NextApiResponse } from 'next';
-
-type Data = {
-  id: number;
-  name: string;
-  price: number;
-  measurements: string;
-  description: string;
-  sold: boolean;
-  imagesId: string;
-};
 
 export default function singleProductHandler(
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse<Product>
 ) {
   const {
     query,
