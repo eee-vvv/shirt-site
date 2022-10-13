@@ -1,0 +1,17 @@
+.container {
+  padding: 15px;
+}
+
+.navLink {
+  padding: 5px;
+  border: 1px solid black;
+  margin: 3px;
+}
+
+.navLink:hover {
+  background-color: #d64086;
+}
+
+.navLink:active {
+  background-color: #e889b5;
+}

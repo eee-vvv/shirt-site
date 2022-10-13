@@ -17,7 +17,7 @@ type Props = {
 };
 
 const Home: NextPage<Props> = ({ data }: Props) => {
-  const products = JSON.parse(data)
+  const products = JSON.parse(data);
   const isAdmin = true;
   const [showProductForm, setShowProductForm] = useState(false);
 
@@ -28,38 +28,42 @@ const Home: NextPage<Props> = ({ data }: Props) => {
   return (
     <div>
       <Head>
-        <title>Shirt Site!</title>
+        <title>shirts</title>
         <meta name="description" content="A site to buy shirts" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main>
-        <h1>Shirt Site!</h1>
+        <div className="page-container">
+          <h1>shirts</h1>
 
-        {
-          // if user is admin, render add product button or
-          // new product form depending on toggle status
-          isAdmin &&
-            (showProductForm ? (
-              <div>
-                <AddProductForm />
+          {
+            // if user is admin, render add product button or
+            // new product form depending on toggle status
+            isAdmin &&
+              (showProductForm ? (
+                <div>
+                  <AddProductForm />
+                  <button onClick={handleProductFormToggle}>
+                    Hide New Product Form
+                  </button>
+                </div>
+              ) : (
                 <button onClick={handleProductFormToggle}>
-                  Hide New Product Form
+                  Add New Product
                 </button>
-              </div>
-            ) : (
-              <button onClick={handleProductFormToggle}>Add New Product</button>
-            ))
-        }
-        {products.map((product) => (
-          <ProductCard
-            key={product.ProductID}
-            id={product.id}
-            name={product.name}
-            imageId={product.imagesId}
-            price={product.price}
-          />
-        ))}
+              ))
+          }
+          {products.map((product) => (
+            <ProductCard
+              key={product.ProductID}
+              id={product.id}
+              name={product.name}
+              imageId={product.imagesId}
+              price={product.price}
+            />
+          ))}
+        </div>
       </main>
 
       <footer></footer>
@@ -68,8 +72,8 @@ const Home: NextPage<Props> = ({ data }: Props) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const products = await handleGetUnsoldProducts()
-  return { props: { data: JSON.stringify(products) }}
+  const products = await handleGetUnsoldProducts();
+  return { props: { data: JSON.stringify(products) } };
 };
 
 export default Home;
