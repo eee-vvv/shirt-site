@@ -18,8 +18,8 @@ export default function allProductHandler(
         .catch((e) => console.log(e));
       break;
     default:
-      console.log('default');
-      res.status(400);
+      res.setHeader('Allow', ['GET']);
+      res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 }
 
