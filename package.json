@@ -10,11 +10,13 @@
   },
   "dependencies": {
     "next": "12.3.1",
+    "pg": "^8.8.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
   "devDependencies": {
     "@types/node": "18.8.3",
+    "@types/pg": "^8.6.5",
     "@types/react": "18.0.21",
     "@types/react-dom": "18.0.6",
     "eslint": "8.24.0",
