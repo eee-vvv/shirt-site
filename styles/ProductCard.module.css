@@ -2,8 +2,25 @@
   border: 1px solid black;
   padding: 10px;
   max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.name {
+  font-weight: bolder;
+  font-size: 16px;
 }
 
 .image {
   max-width: 200px;
+}
+
+.productCard:hover {
+  background-color: #d64086;
+}
+
+.productCard:active {
+  background-color: #e889b5;
 }

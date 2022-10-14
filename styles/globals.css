@@ -7,6 +7,26 @@ body {
   background-color: #a7aeb8;
 }
 
+button {
+  background-color: #00ff26;
+  border: 1px solid black;
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0;
+  overflow: visible;
+  text-transform: none;
+  -webkit-appearance: button;
+}
+
+button:hover {
+  background-color: #7dff90;
+}
+
+button:active {
+  background-color: #4aed62;
+}
+
 a {
   color: inherit;
   text-decoration: none;

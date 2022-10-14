@@ -14,9 +14,9 @@ const ProductCard = ({ id, imageId, price, name }: Props) => {
     <Link href={`/${id}`}>
       <a>
         <div className={styles.productCard}>
-          <h2>{name}</h2>
-          <img src="https://img.ssensemedia.com/images/b_white,c_lpad,g_center,h_1412,w_940/c_scale,h_960/f_auto,dpr_2.0/222565F521004_1/gramicci-brown-tapered-loose-pants.jpg" className={styles.image}></img>
+          <div className={styles.name}>{name}</div>
           <div>${price}</div>
+          <img src="https://img.ssensemedia.com/images/b_white,c_lpad,g_center,h_1412,w_940/c_scale,h_960/f_auto,dpr_2.0/222565F521004_1/gramicci-brown-tapered-loose-pants.jpg" className={styles.image}></img>
         </div>
       </a>
     </Link>
