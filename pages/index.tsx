@@ -8,6 +8,8 @@ import { handleGetUnsoldProducts } from '../db/queryHandlers';
 import ProductCard from '../components/ProductCard';
 import AddProductForm from '../components/AddProductForm';
 
+import styles from '../styles/Home.module.css'
+
 import type { Product } from '../interfaces';
 
 import { allProducts } from '../lib/db';
@@ -35,7 +37,7 @@ const Home: NextPage<Props> = ({ data }: Props) => {
 
       <main>
         <div className="page-container">
-          <h1>shirts</h1>
+          <h1>Shirts</h1>
 
           {
             // if user is admin, render add product button or
@@ -54,15 +56,17 @@ const Home: NextPage<Props> = ({ data }: Props) => {
                 </button>
               ))
           }
-          {products.map((product) => (
-            <ProductCard
-              key={product.ProductID}
-              id={product.id}
-              name={product.name}
-              imageId={product.imagesId}
-              price={product.price}
-            />
-          ))}
+          <div className={styles.productCardsContainer}>
+            {products.map((product) => (
+              <ProductCard
+                key={product.ProductID}
+                id={product.id}
+                name={product.name}
+                imageId={product.imagesId}
+                price={product.price}
+              />
+            ))}
+          </div>
         </div>
       </main>
 
