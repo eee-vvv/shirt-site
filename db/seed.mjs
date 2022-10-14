@@ -1,5 +1,8 @@
-const { Client } = require('pg');
+import pg from 'pg'
+import dbSecrets from './dbSecrets.js'
 
+const { Client } = pg;
+const clientSecrets = dbSecrets
 
 const choose = (arr) => {
     return arr[Math.floor(Math.random() * (arr.length))];
@@ -30,7 +33,7 @@ const randProduct = () => {
 async function seed(numProducts) {
     try {
 
-        const client = new Client();
+        const client = new Client(clientSecrets());
 
         await client.connect();
 
@@ -47,8 +50,8 @@ async function seed(numProducts) {
             );`);
         
         for (let num = 0; num < numProducts; num ++){
-            p = randProduct();
-            values = [p.name, p.price, p.measurements, p.description, p.sold, p.imagesId]
+            let p = randProduct();
+            let values = [p.name, p.price, p.measurements, p.description, p.sold, p.imagesId]
             await client.query(
                 `INSERT INTO product (
                 name,
@@ -63,7 +66,7 @@ async function seed(numProducts) {
                 values);
         }
         
-        res = await client.query(`SELECT * from product`);
+        const res = await client.query(`SELECT * from product`);
         console.log(res.rows)
         await client.end(); 
 
