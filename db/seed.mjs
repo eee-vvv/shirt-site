@@ -40,7 +40,7 @@ async function seed(numProducts) {
         await client.query(`DROP TABLE IF EXISTS product;`)
 
         await client.query(`CREATE TABLE product (
-            ProductID serial PRIMARY KEY,
+            id serial PRIMARY KEY,
             name varchar(500),
             price integer,
             measurements varchar(500),

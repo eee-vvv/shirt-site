@@ -1,5 +1,7 @@
 import { Client } from 'pg'
 import clientSecrets from './dbSecrets'
+import type { Product } from '../interfaces';
+
 
 export async function handleGetUnsoldProducts() {
   try {
@@ -16,7 +18,7 @@ export async function handleGetUnsoldProducts() {
   }
 }
 
-export async function handleGetProduct(id: number) {
+export async function handleGetProduct(id: number): Promise<Product|null> {
   try {
     const client = new Client(clientSecrets());
     await client.connect();
@@ -24,11 +26,12 @@ export async function handleGetProduct(id: number) {
       `
       SELECT *
       FROM product
-      WHERE ProductID = $1;`,
+      WHERE id = $1;`,
       [id]
     );
     return res.rows[0]
   } catch (e) {
     console.error('error in /api/product/[id] handleGet method: ', e);
+    return null
   }
 }

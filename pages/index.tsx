@@ -13,11 +13,11 @@ import type { Product } from '../interfaces';
 import { allProducts } from '../lib/db';
 
 type Props = {
-  data: string;
+  data: Product[];
 };
 
 const Home: NextPage<Props> = ({ data }: Props) => {
-  const products = JSON.parse(data)
+  const products = data
   const isAdmin = true;
   const [showProductForm, setShowProductForm] = useState(false);
 
@@ -51,9 +51,9 @@ const Home: NextPage<Props> = ({ data }: Props) => {
               <button onClick={handleProductFormToggle}>Add New Product</button>
             ))
         }
-        {products.map((product) => (
+        {products.map((product: Product) => (
           <ProductCard
-            key={product.ProductID}
+            key={product.id}
             id={product.id}
             name={product.name}
             imageId={product.imagesId}
@@ -69,7 +69,7 @@ const Home: NextPage<Props> = ({ data }: Props) => {
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const products = await handleGetUnsoldProducts()
-  return { props: { data: JSON.stringify(products) }}
+  return { props: { data: products }}
 };
 
 export default Home;
