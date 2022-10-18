@@ -26,8 +26,8 @@ const ProductPage: NextPage<Props> = ({ data }: Props) => {
     //     return <div>product not found in db</div>
     // }
 
-    return ( 
-        <div>
+    return (
+        <div className="page-container">
             <h2>{product.name}</h2>
             <div>image: {product.imagesId}</div>
             <div>
