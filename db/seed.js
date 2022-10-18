@@ -1,5 +1,8 @@
-const { Client } = require('pg');
+const { Client } = require('pg')
+const { clientSecrets } = require('./dbSecrets.js')
 
+// const { Client } = pg;
+// const clientSecrets = dbSecrets
 
 const choose = (arr) => {
     return arr[Math.floor(Math.random() * (arr.length))];
@@ -21,7 +24,7 @@ const randProduct = () => {
             'measurements' : choose(measurementOptions1) + choose(measurementOptions2),
             'description' : desc,
             'sold' : choose([true, false]),
-            'imagesId' : (Math.random() + 1).toString(36).substring(7)   
+            'imagesId' : (Math.random() + 1).toString(36).substring(7)
         }
     )
 }
@@ -30,14 +33,14 @@ const randProduct = () => {
 async function seed(numProducts) {
     try {
 
-        const client = new Client();
+        const client = new Client(clientSecrets());
 
         await client.connect();
 
         await client.query(`DROP TABLE IF EXISTS product;`)
 
         await client.query(`CREATE TABLE product (
-            ProductID serial PRIMARY KEY,
+            id serial PRIMARY KEY,
             name varchar(500),
             price integer,
             measurements varchar(500),
@@ -45,10 +48,10 @@ async function seed(numProducts) {
             sold boolean,
             imagesId varchar(5004)
             );`);
-        
+
         for (let num = 0; num < numProducts; num ++){
-            p = randProduct();
-            values = [p.name, p.price, p.measurements, p.description, p.sold, p.imagesId]
+            let p = randProduct();
+            let values = [p.name, p.price, p.measurements, p.description, p.sold, p.imagesId]
             await client.query(
                 `INSERT INTO product (
                 name,
@@ -59,13 +62,13 @@ async function seed(numProducts) {
                 imagesId
                 )
                 VALUES ($1, $2, $3, $4, $5, $6)
-                ;`, 
+                ;`,
                 values);
         }
-        
-        res = await client.query(`SELECT * from product`);
+
+        const res = await client.query(`SELECT * from product`);
         console.log(res.rows)
-        await client.end(); 
+        await client.end();
 
     } catch(e) {
 

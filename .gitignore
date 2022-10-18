@@ -35,4 +35,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# secrets
 secrets.txt
+db/dbSecrets.js
