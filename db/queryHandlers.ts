@@ -1,5 +1,5 @@
 import { Client } from 'pg'
-import clientSecrets from './dbSecrets'
+import { clientSecrets } from './dbSecrets'
 import type { Product } from '../interfaces';
 
 

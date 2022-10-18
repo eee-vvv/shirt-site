@@ -1,8 +1,8 @@
-import pg from 'pg'
-import dbSecrets from './dbSecrets.js'
+const { Client } = require('pg')
+const { clientSecrets } = require('./dbSecrets.js')
 
-const { Client } = pg;
-const clientSecrets = dbSecrets
+// const { Client } = pg;
+// const clientSecrets = dbSecrets
 
 const choose = (arr) => {
     return arr[Math.floor(Math.random() * (arr.length))];
@@ -24,7 +24,7 @@ const randProduct = () => {
             'measurements' : choose(measurementOptions1) + choose(measurementOptions2),
             'description' : desc,
             'sold' : choose([true, false]),
-            'imagesId' : (Math.random() + 1).toString(36).substring(7)   
+            'imagesId' : (Math.random() + 1).toString(36).substring(7)
         }
     )
 }
@@ -48,7 +48,7 @@ async function seed(numProducts) {
             sold boolean,
             imagesId varchar(5004)
             );`);
-        
+
         for (let num = 0; num < numProducts; num ++){
             let p = randProduct();
             let values = [p.name, p.price, p.measurements, p.description, p.sold, p.imagesId]
@@ -62,13 +62,13 @@ async function seed(numProducts) {
                 imagesId
                 )
                 VALUES ($1, $2, $3, $4, $5, $6)
-                ;`, 
+                ;`,
                 values);
         }
-        
+
         const res = await client.query(`SELECT * from product`);
         console.log(res.rows)
-        await client.end(); 
+        await client.end();
 
     } catch(e) {
 
