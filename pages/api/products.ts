@@ -24,7 +24,8 @@ export default function allProductHandler(
         .catch((e) => console.log(e));
       break;
     case 'POST':
-
+      // TO DO: add connection to query handler
+      break
     default:
       res.setHeader('Allow', ['GET']);
       res.status(405).end(`Method ${req.method} Not Allowed`);

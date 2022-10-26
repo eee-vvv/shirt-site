@@ -28,7 +28,7 @@ const AddProductForm = () => {
     console.log('submitting!');
   };
 
-  const postNewProductToDatabase() {
+  const postNewProductToDatabase = () => {
 
   }
 
