@@ -63,3 +63,7 @@ pages:
 - CMS: none
 - Payment system: (stripe)
 - Image storage: (google cloud storage)
+
+## oct 20 notes
+ - subscribing to a newsletter on the site
+  - whether to "roll our own" or find a plugin service
