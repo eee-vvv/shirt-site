@@ -28,6 +28,10 @@ const AddProductForm = () => {
     console.log('submitting!');
   };
 
+  const postNewProductToDatabase() {
+
+  }
+
   return (
     <div style={{ border: '1px solid black' }}>
       <form onSubmit={handleSubmit}>

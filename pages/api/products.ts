@@ -23,6 +23,8 @@ export default function allProductHandler(
         })
         .catch((e) => console.log(e));
       break;
+    case 'POST':
+
     default:
       res.setHeader('Allow', ['GET']);
       res.status(405).end(`Method ${req.method} Not Allowed`);
