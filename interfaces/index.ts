@@ -1,5 +1,5 @@
 export type Product = {
-  id: number;
+  id?: number;
   name: string;
   price: number;
   measurements: string;
@@ -7,3 +7,40 @@ export type Product = {
   sold: boolean;
   imagesId: string;
 };
+
+export const isProduct = (thing: any) => {
+  if (
+    thing.name &&
+    typeof thing.name === "string" &&
+    thing.price &&
+    typeof thing.price === "number" &&
+    thing.measurements &&
+    typeof thing.measurements === "string" &&
+    thing.description &&
+    typeof thing.description === "string" &&
+    thing.sold !== null &&
+    typeof thing.sold === "boolean" &&
+    thing.imagesId &&
+    typeof thing.imagesId === "string"
+  ) {
+    return true;
+  }
+  return false;
+};
+
+export const isProductJSON = (thing: any) => {
+  if (
+    thing.name &&
+    thing.price &&
+    thing.measurements &&
+    thing.description &&
+    thing.sold !== null &&
+    thing.imagesId &&
+    parseInt(thing.price) &&
+    (thing.sold === 'true' || 
+    thing.sold === 'false')
+  ) {
+  return true
+  }
+  return false
+}
