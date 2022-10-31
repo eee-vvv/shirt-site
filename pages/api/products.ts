@@ -7,7 +7,8 @@ import {
 import { Product, isProduct, isProductJSON } from '../../interfaces';
 
 type Data = {
-  products: Array<Product>;
+  products?: Array<Product>;
+  error?: string;
 };
 
 export default function allProductHandler(
@@ -19,7 +20,7 @@ export default function allProductHandler(
       handleGetUnsoldProducts()
         .then((products) => {
           if (!products) {
-            res.status(500);
+            res.status(500).json({ error: 'failed to get products from db' });
             return;
           }
           res.status(200).json({ products: products });
@@ -39,13 +40,13 @@ export default function allProductHandler(
         };
       } else {
         // TODO: figure out why requests are hanging
-        console.log('JSON not a product')
-        res.status(400);
+        console.log('JSON not a product');
+        res.status(400).json({ error: 'JSON sent to db not a product' });
         break;
       }
       handlePostProduct(postProduct).then((product) => {
         if (!product) {
-          res.status(500);
+          res.status(500).json({ error: 'product not found' });
           return;
         }
         res.status(200).json({ products: [product] });
