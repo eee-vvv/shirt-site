@@ -1,11 +1,15 @@
 import React from 'react';
 import { useState } from 'react';
 
+// TODO: two different product types (JSON vs actual data types on fields)
+// 2 ) replace below type declaration with import
+
 type Product = {
   name: string;
   price: string;
   description: string;
   measurements: string;
+  imagesId: string;
 };
 
 const AddProductForm = () => {
@@ -14,6 +18,7 @@ const AddProductForm = () => {
     price: '0',
     description: '',
     measurements: '',
+    imagesId: 'xxx',
   });
 
   const handleChange = (e: React.FormEvent) => {
@@ -26,11 +31,26 @@ const AddProductForm = () => {
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     console.log('submitting!');
+    const productToSubmit = {
+      ...product,
+      price: parseInt(product.price),
+      sold: false
+    }
+    const newProductRes = postNewProductToDatabase(product);
+    console.log('new product response in handleSubmit: ', newProductRes);
   };
 
-  const postNewProductToDatabase = () => {
-
-  }
+  const postNewProductToDatabase = async (product: Product) => {
+    const response = await fetch('/api/products', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(product),
+    });
+    const result = await response.json();
+    return result.data;
+  };
 
   return (
     <div style={{ border: '1px solid black' }}>
