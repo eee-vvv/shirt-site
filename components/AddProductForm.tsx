@@ -1,10 +1,11 @@
 import React from 'react';
 import { useState } from 'react';
+import type { Product } from '../interfaces/index'
 
 // TODO: two different product types (JSON vs actual data types on fields)
 // 2 ) replace below type declaration with import
 
-type Product = {
+type JSONProduct = {
   name: string;
   price: string;
   description: string;
@@ -24,7 +25,7 @@ const AddProductForm = () => {
   const handleChange = (e: React.FormEvent) => {
     const target = e.target as HTMLTextAreaElement;
     const tempProduct = { ...product };
-    tempProduct[target.name as keyof Product] = target.value;
+    tempProduct[target.name as keyof JSONProduct] = target.value;
     setProduct(tempProduct);
   };
 
@@ -36,7 +37,7 @@ const AddProductForm = () => {
       price: parseInt(product.price),
       sold: false
     }
-    const newProductRes = postNewProductToDatabase(product);
+    const newProductRes = postNewProductToDatabase(productToSubmit);
     console.log('new product response in handleSubmit: ', newProductRes);
   };
 

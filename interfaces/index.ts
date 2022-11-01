@@ -8,11 +8,12 @@ export type Product = {
   imagesId: string;
 };
 
+
 export const isProduct = (thing: any) => {
   if (
     thing.name &&
     typeof thing.name === "string" &&
-    thing.price &&
+    thing.price !== null &&
     typeof thing.price === "number" &&
     thing.measurements &&
     typeof thing.measurements === "string" &&
