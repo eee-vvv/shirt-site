@@ -37,7 +37,7 @@ export const isProductJSON = (thing: any) => {
     thing.description &&
     thing.sold !== null &&
     thing.imagesId &&
-    parseInt(thing.price) &&
+    !isNaN(parseInt(thing.price)) &&
     (thing.sold === 'true' || 
     thing.sold === 'false')
   ) {
