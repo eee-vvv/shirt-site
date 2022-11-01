@@ -25,11 +25,18 @@ const AddProductForm = () => {
   const handleChange = (e: React.FormEvent) => {
     const target = e.target as HTMLTextAreaElement;
     const tempProduct = { ...product };
-    tempProduct[target.name as keyof JSONProduct] = target.value;
+    if (target.name === 'price' && /[\D]+$/.test(target.value)){
+      console.log(target.value)
+      tempProduct[target.name as keyof JSONProduct] = '';
+      alert('please enter a number')
+    } else {
+      tempProduct[target.name as keyof JSONProduct] = target.value;
+    }
     setProduct(tempProduct);
   };
 
   const handleSubmit = (e: React.SyntheticEvent) => {
+    // TODO: add validateProduct
     e.preventDefault();
     console.log('submitting!');
     const productToSubmit = {
@@ -71,7 +78,7 @@ const AddProductForm = () => {
             name="price"
             onChange={handleChange}
             value={product.price}
-            type="number"
+            type="text"
           />
         </div>
         <div>
