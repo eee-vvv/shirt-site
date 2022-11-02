@@ -27,6 +27,18 @@ const Home: NextPage<Props> = ({ data }: Props) => {
     setShowProductForm((prev) => !prev);
   };
 
+  const handleDeleteSingleProduct = async (id:number) => {
+    const response = await fetch(`/api/product/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify('product deleted'),
+    });
+    const result = await response.json();
+    return result.data;
+  }
+
   return (
     <div>
       <Head>
@@ -65,7 +77,8 @@ const Home: NextPage<Props> = ({ data }: Props) => {
                   imageId={product.imagesId}
                   price={product.price}
                 />
-                <button>delete</button>
+                {isAdmin && 
+                <button onClick={() => handleDeleteSingleProduct(product.id)}>delete</button>}
               </div>
             ))}
           </div>

@@ -1,10 +1,11 @@
 import { Client } from 'pg'
 import { Product } from '../../../interfaces'
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { handleDeleteProduct } from '../../../db/queryHandlers';
 
-export default function singleProductHandler(
+export default async function singleProductHandler(
   req: NextApiRequest,
-  res: NextApiResponse<Product>
+  res: NextApiResponse<Product|{message:string}>
 ) {
   const {
     query,
@@ -21,17 +22,22 @@ export default function singleProductHandler(
   const id = parseInt(query.id)
 
   switch (method) {
-    case 'GET':
+    case 'GET': // TODO: change to async await syntax
       handleGet(id).then((product) => {
         res.status(200).json({ ...product });
       });
       break;
+    case 'DELETE':
+      await handleDeleteProduct(id)
+      res.status(200).json({message: `product deleted`})
+      break
     default:
-      res.setHeader('Allow', ['GET']);
+      res.setHeader('Allow', ['GET', 'DELETE']);
       res.status(405).end(`Method ${method} Not Allowed`);
   }
 }
 
+// TODO: delete redundant code and move this to query handlers
 async function handleGet(id: number) {
   try {
     const client = new Client();

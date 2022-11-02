@@ -50,6 +50,25 @@ export async function handleGetProduct(id: number): Promise<Product|null> {
   }
 }
 
+export async function handleDeleteProduct(id: number): Promise<number|null>{
+  try {
+    const client = await clinetConnect()
+    if (client instanceof Error){
+      throw client
+    }
+    const res = await client.query(
+      `
+      DELETE FROM product
+      WHERE id = $1;`,
+      [id]
+    );
+    return id
+  } catch (e) {
+    console.error('error in /api/product/[id] handlePost method: ', e);
+    return null
+  }
+}
+
 export async function handlePostProduct(p: Product): Promise<Product|null> {
   try {
     const client = await clinetConnect()
