@@ -1,17 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
-import type { Product } from '../interfaces/index'
+import type { NewProduct, JSONProduct } from '../interfaces/index'
 
-// TODO: two different product types (JSON vs actual data types on fields)
-// 2 ) replace below type declaration with import
-
-type JSONProduct = {
-  name: string;
-  price: string;
-  description: string;
-  measurements: string;
-  imagesId: string;
-};
 
 const AddProductForm = () => {
   const [product, setProduct] = useState({
@@ -48,7 +38,7 @@ const AddProductForm = () => {
     console.log('new product response in handleSubmit: ', newProductRes);
   };
 
-  const postNewProductToDatabase = async (product: Product) => {
+  const postNewProductToDatabase = async (product: NewProduct) => {
     const response = await fetch('/api/products', {
       method: 'POST',
       headers: {

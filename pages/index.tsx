@@ -72,10 +72,7 @@ const Home: NextPage<Props> = ({ data }: Props) => {
             {products.map((product: Product) => (
               <div key={product.id}>
                 <ProductCard
-                  id={product.id}
-                  name={product.name}
-                  imageId={product.imagesId}
-                  price={product.price}
+                  product={product}
                 />
                 {isAdmin && 
                 <button onClick={() => handleDeleteSingleProduct(product.id)}>delete</button>}

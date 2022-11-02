@@ -2,7 +2,7 @@
 
 // 1) Products as they exist in the database
 export type Product = {
-  id?: number;
+  id: number;
   name: string;
   price: number;
   measurements: string;
@@ -12,12 +12,23 @@ export type Product = {
 };
 
 // 2) Products before they're put into the database
-export type ProductNonDB = {
-
+export type NewProduct = {
+  name: string;
+  price: number;
+  measurements: string;
+  description: string;
+  sold: boolean;
+  imagesId: string;
 }
 
 // 3) Products when all fields are strings
-
+export type JSONProduct = {
+  name: string;
+  price: string;
+  measurements: string;
+  description: string;
+  imagesId: string;
+}
 
 
 
