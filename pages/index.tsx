@@ -58,13 +58,15 @@ const Home: NextPage<Props> = ({ data }: Props) => {
           }
           <div className={styles.productCardsContainer}>
             {products.map((product: Product) => (
-              <ProductCard
-                key={product.id}
-                id={product.id}
-                name={product.name}
-                imageId={product.imagesId}
-                price={product.price}
-              />
+              <div key={product.id}>
+                <ProductCard
+                  id={product.id}
+                  name={product.name}
+                  imageId={product.imagesId}
+                  price={product.price}
+                />
+                <button>delete</button>
+              </div>
             ))}
           </div>
         </div>

@@ -25,7 +25,7 @@ const AddProductForm = () => {
   const handleChange = (e: React.FormEvent) => {
     const target = e.target as HTMLTextAreaElement;
     const tempProduct = { ...product };
-    if (target.name === 'price' && isNaN(parseInt(target.value))){
+    if (target.name === 'price' && isNaN(parseInt(target.value)) && target.value != ''){
       console.log(target.value)
       tempProduct[target.name as keyof JSONProduct] = '';
       alert('please enter a number')
