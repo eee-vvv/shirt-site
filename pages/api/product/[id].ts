@@ -1,10 +1,11 @@
 import { Client } from 'pg'
 import { Product } from '../../../interfaces'
+import { handleDeleteProduct } from '../../../db/queryHandlers';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-export default function singleProductHandler(
+export default async function singleProductHandler(
   req: NextApiRequest,
-  res: NextApiResponse<Product>
+  res: NextApiResponse<Product|{message:String}>
 ) {
   const {
     query,
@@ -26,8 +27,16 @@ export default function singleProductHandler(
         res.status(200).json({ ...product });
       });
       break;
+    case 'DELETE':
+      const productsDeleted = await handleDeleteProduct(id)
+      if (productsDeleted){
+        res.status(200).json({message: `product deleted`})
+      } else {
+        res.status(400).json({message: `product with id# ${id} not in database`})
+      }
+      break
     default:
-      res.setHeader('Allow', ['GET']);
+      res.setHeader('Allow', ['GET','DELETE']);
       res.status(405).end(`Method ${method} Not Allowed`);
   }
 }
