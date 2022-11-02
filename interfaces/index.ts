@@ -1,3 +1,6 @@
+// Our application has three product types:
+
+// 1) Products as they exist in the database
 export type Product = {
   id?: number;
   name: string;
@@ -7,6 +10,15 @@ export type Product = {
   sold: boolean;
   imagesId: string;
 };
+
+// 2) Products before they're put into the database
+export type ProductNonDB = {
+
+}
+
+// 3) Products when all fields are strings
+
+
 
 
 export const isProduct = (thing: any) => {
