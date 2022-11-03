@@ -3,7 +3,7 @@ import { clientSecrets } from './dbSecrets'
 import type { Product } from '../interfaces';
 
 
-async function clinetConnect(): Promise<Client|Error>{
+async function clientConnect(): Promise<Client|Error>{
   try {
     const client = new Client(clientSecrets());
     await client.connect();
@@ -15,7 +15,7 @@ async function clinetConnect(): Promise<Client|Error>{
 
 export async function handleGetUnsoldProducts(): Promise<any[]|null> {
   try {
-    const client = await clinetConnect()
+    const client = await clientConnect()
     if (client instanceof Error){
       throw client
     }
@@ -32,7 +32,7 @@ export async function handleGetUnsoldProducts(): Promise<any[]|null> {
 
 export async function handleGetProduct(id: number): Promise<Product|null> {
   try {
-    const client = await clinetConnect()
+    const client = await clientConnect()
     if (client instanceof Error){
       throw client
     }
@@ -52,7 +52,7 @@ export async function handleGetProduct(id: number): Promise<Product|null> {
 
 export async function handleDeleteProduct(id: number): Promise<number|null>{
   try {
-    const client = await clinetConnect()
+    const client = await clientConnect()
     if (client instanceof Error){
       throw client
     }
@@ -62,7 +62,7 @@ export async function handleDeleteProduct(id: number): Promise<number|null>{
       WHERE id = $1;`,
       [id]
     );
-    return id
+    return res.rowCount
   } catch (e) {
     console.error('error in /api/product/[id] handlePost method: ', e);
     return null
@@ -71,7 +71,7 @@ export async function handleDeleteProduct(id: number): Promise<number|null>{
 
 export async function handlePostProduct(p: Product): Promise<Product|null> {
   try {
-    const client = await clinetConnect()
+    const client = await clientConnect()
     if (client instanceof Error){
       throw client
     }
