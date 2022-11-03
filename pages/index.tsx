@@ -27,12 +27,13 @@ const Home: NextPage<Props> = ({ data }: Props) => {
     setShowProductForm((prev) => !prev);
   };
 
-  const handleDeleteSingleProduct = async (id: number) => {
+  const handleDeleteSingleProduct = async (id:number) => {
     const response = await fetch(`/api/product/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
-      }
+      },
+      body: JSON.stringify('product deleted'),
     });
     const result = await response.json();
     return result.data;
@@ -69,19 +70,13 @@ const Home: NextPage<Props> = ({ data }: Props) => {
           }
           <div className={styles.productCardsContainer}>
             {products.map((product: Product) => (
-            <div key={product.id}>  
-              <ProductCard
-                id={product.id}
-                name={product.name}
-                imageId={product.imagesId}
-                price={product.price}
-              />
-              {isAdmin && 
-              <button onClick={() => handleDeleteSingleProduct(product.id)}>
-                Delete
-              </button>
-              }
-            </div>
+              <div key={product.id}>
+                <ProductCard
+                  product={product}
+                />
+                {isAdmin && 
+                <button onClick={() => handleDeleteSingleProduct(product.id)}>delete</button>}
+              </div>
             ))}
           </div>
         </div>

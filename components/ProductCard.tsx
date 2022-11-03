@@ -1,15 +1,14 @@
 import Link from 'next/link';
 import React from 'react';
+import { Product } from '../interfaces';
 import styles from '../styles/ProductCard.module.css';
 
-type Props = {
-  id: number;
-  imageId: string;
-  price: number;
-  name: string;
-};
+type ProductCardProps = {
+  product: Product
+}
 
-const ProductCard = ({ id, imageId, price, name }: Props) => {
+const ProductCard = ({product}: ProductCardProps) => {
+  const { id, name, price} = product;
   return (
     <Link href={`/${id}`}>
       <a>

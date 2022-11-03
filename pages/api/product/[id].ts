@@ -2,6 +2,7 @@ import { Client } from 'pg'
 import { Product } from '../../../interfaces'
 import { handleDeleteProduct } from '../../../db/queryHandlers';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { handleDeleteProduct } from '../../../db/queryHandlers';
 
 export default async function singleProductHandler(
   req: NextApiRequest,
@@ -22,7 +23,7 @@ export default async function singleProductHandler(
   const id = parseInt(query.id)
 
   switch (method) {
-    case 'GET':
+    case 'GET': // TODO: change to async await syntax
       handleGet(id).then((product) => {
         res.status(200).json({ ...product });
       });
@@ -41,6 +42,7 @@ export default async function singleProductHandler(
   }
 }
 
+// TODO: delete redundant code and move this to query handlers
 async function handleGet(id: number) {
   try {
     const client = new Client();
