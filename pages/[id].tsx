@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import type { NextPage, GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -22,7 +22,11 @@ const ProductPage: NextPage<Props> = ({ data }: Props) => {
   return (
     <div>
       <ToggleEditButton showEdit={showEdit} setShowEdit={setShowEdit} />
-      {showEdit ? <EditProductForm /> : <ProductInfo product={product} />}
+      {showEdit ? (
+        <EditProductForm product={product} setShowEdit={setShowEdit} />
+      ) : (
+        <ProductInfo product={product} />
+      )}
     </div>
   );
 };
@@ -64,10 +68,79 @@ function ProductInfo({ product }: ProductInfoProps) {
   );
 }
 
-type EditProductFormProps = {};
+type EditProductFormProps = {
+  product: Product;
+  setShowEdit: Function;
+};
 
-function EditProductForm() {
-  return <div>Edit</div>;
+function EditProductForm({ product, setShowEdit }: EditProductFormProps) {
+  const [editedProduct, setEditedProduct] = useState({ ...product });
+
+  console.log('edited product: ', editedProduct);
+
+  const handleChange = (e: React.FormEvent) => {
+    const target = e.target as HTMLTextAreaElement;
+    let val: any = target.value;
+
+    if (target.name === 'sold') {
+      val = target.value === 'true';
+    }
+
+    setEditedProduct((prevProduct: Product) => {
+      return { ...prevProduct, [target.name]: val };
+    });
+  };
+
+  const handleSubmit = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    console.log('submitting!');
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <h2>Edit Product</h2>
+      <div>
+        <input
+          name="name"
+          onChange={handleChange}
+          value={editedProduct.name}
+          type="text"
+        />
+      </div>
+      <div>
+        <input
+          name="price"
+          onChange={handleChange}
+          value={editedProduct.price}
+          type="number"
+        />
+      </div>
+      <div>
+        <input
+          name="description"
+          onChange={handleChange}
+          value={editedProduct.description}
+          type="text"
+        />
+      </div>
+      <div>
+        <input
+          name="measurements"
+          onChange={handleChange}
+          value={editedProduct.measurements}
+          type="text"
+        />
+      </div>
+      <div>
+        <label>Sold</label>
+        <select value={`${product.sold}`} name="sold" onChange={handleChange}>
+          <option value="false">No</option>
+          <option value="true">Yes</option>
+        </select>
+      </div>
+      <button>Submit Changes</button>
+    </form>
+  );
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
