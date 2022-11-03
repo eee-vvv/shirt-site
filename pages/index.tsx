@@ -27,6 +27,9 @@ const Home: NextPage<Props> = ({ data }: Props) => {
     setShowProductForm((prev) => !prev);
   };
 
+  // TODO:
+  //  1) Make delete button into its own module so it can be reused
+  //  2) Client-side handling of multiple clicks
   const handleDeleteSingleProduct = async (id:number) => {
     const response = await fetch(`/api/product/${id}`, {
       method: 'DELETE',
