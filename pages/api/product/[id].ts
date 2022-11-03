@@ -2,7 +2,6 @@ import { Client } from 'pg'
 import { Product } from '../../../interfaces'
 import { handleDeleteProduct } from '../../../db/queryHandlers';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { handleDeleteProduct } from '../../../db/queryHandlers';
 
 export default async function singleProductHandler(
   req: NextApiRequest,
