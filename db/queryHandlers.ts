@@ -1,13 +1,24 @@
-import { Client } from 'pg'
+import { Client, QueryResult } from 'pg'
 import { clientSecrets } from './dbSecrets'
 import type { Product } from '../interfaces';
 
 
-export async function handleGetUnsoldProducts() {
+async function clientConnect(): Promise<Client|Error>{
   try {
-    console.log('calling GET handler');
     const client = new Client(clientSecrets());
     await client.connect();
+    return client
+  } catch (e: any){
+    return e
+  }
+}
+
+export async function handleGetUnsoldProducts(): Promise<any[]|null> {
+  try {
+    const client = await clientConnect()
+    if (client instanceof Error){
+      throw client
+    }
     const products = await client.query(`
         SELECT *
         FROM product
@@ -15,13 +26,16 @@ export async function handleGetUnsoldProducts() {
     return products.rows;
   } catch (e) {
     console.log(e);
+    return null
   }
 }
 
 export async function handleGetProduct(id: number): Promise<Product|null> {
   try {
-    const client = new Client(clientSecrets());
-    await client.connect();
+    const client = await clientConnect()
+    if (client instanceof Error){
+      throw client
+    }
     const res = await client.query(
       `
       SELECT *
@@ -32,6 +46,52 @@ export async function handleGetProduct(id: number): Promise<Product|null> {
     return res.rows[0]
   } catch (e) {
     console.error('error in /api/product/[id] handleGet method: ', e);
+    return null
+  }
+}
+
+export async function handleDeleteProduct(id: number): Promise<number|null>{
+  try {
+    const client = await clientConnect()
+    if (client instanceof Error){
+      throw client
+    }
+    const res = await client.query(
+      `
+      DELETE FROM product
+      WHERE id = $1;`,
+      [id]
+    );
+    return res.rowCount
+  } catch (e) {
+    console.error('error in /api/product/[id] handlePost method: ', e);
+    return null
+  }
+}
+
+export async function handlePostProduct(p: Product): Promise<Product|null> {
+  try {
+    const client = await clientConnect()
+    if (client instanceof Error){
+      throw client
+    }
+    let values = [p.name, p.price, p.measurements, p.description, p.sold, p.imagesId]
+    const res = await client.query(
+        `INSERT INTO product (
+        name,
+        price,
+        measurements,
+        description,
+        sold,
+        imagesId
+        )
+        VALUES ($1, $2, $3, $4, $5, $6)
+        RETURNING *
+        ;`,
+        values);
+      return res.rows[0]    
+    } catch (e) {
+    console.error('error in /api/products handlePost method: ', e);
     return null
   }
 }
