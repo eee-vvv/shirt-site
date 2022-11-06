@@ -26,7 +26,14 @@
 - [ ] **CMS**
   - [ ] allow admin to manage inventory and orders without our help
   - [ ] ADD NEW PRODUCTS
+    - [ ] have newly added products appear immediatley
+      - [ ] refresh automatically for now
+    - [ ] in-site notification for added product
   - [ ] EDIT ALREADY EXISTING PRODUCTS
+    - [ ] write to DB
+    - [ ] edits apear immediatley
+    - [ ] validate entries
+    - [ ]
   - [ ] DELETE PRODUCTS
   - [ ] **AUTH**: admin can securely log in via Google auth in order to access CMS and make changes to inventory
 - [ ] **Style**
