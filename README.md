@@ -25,12 +25,15 @@
 - [ ] set up stripe to work locally
 - [ ] **CMS**
   - [ ] allow admin to manage inventory and orders without our help
+  - [ ] ADD NEW PRODUCTS
+  - [ ] EDIT ALREADY EXISTING PRODUCTS
+  - [ ] DELETE PRODUCTS
   - [ ] **AUTH**: admin can securely log in via Google auth in order to access CMS and make changes to inventory
 - [ ] **Style**
   - [ ] 1) Make site look polished/like a fairly accurate prototype
   - [ ] 2) Meet with Ruby and make site look DONE!
 
-### Post-deployment
+### Deployment
 
 - [ ] **Dev Ops**
   - [ ] Test suite in place, development is TDD, and we have high test coverage of the product
