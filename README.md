@@ -15,7 +15,7 @@
 
 - [ ] Connect email Ruby gave us to all new accounts for everything
 - [ ] put Ruby's images in local storage and try to simulate how we'll fetch images
-- [ ] CART
+- [ ] **Cart**
   - [ ] Users can browse shirts and add items to their carts without logging in
   - [ ] Users can remove items from the shopping cart
   - [ ] shopping cart persists between browser sessions (times out eventually)
@@ -30,11 +30,15 @@
       - [ ] refresh automatically for now
     - [ ] in-site notification for added product
   - [ ] EDIT ALREADY EXISTING PRODUCTS
-    - [ ] write to DB
-    - [ ] edits apear immediatley
+    - [ ] submit
+      - [ ] write to DB
+      - [ ] edits apear immediatley
+      - [ ] sumbit closes form
     - [ ] validate entries
-    - [ ]
+    - [ ] finish controled form behavior
   - [ ] DELETE PRODUCTS
+    - [ ] refresh/update automatically
+    - [ ] extract delete button component and put it in individual product component
   - [ ] **AUTH**: admin can securely log in via Google auth in order to access CMS and make changes to inventory
 - [ ] **Style**
   - [ ] 1) Make site look polished/like a fairly accurate prototype
@@ -44,6 +48,12 @@
 
 - [ ] **Dev Ops**
   - [ ] Test suite in place, development is TDD, and we have high test coverage of the product
+- [ ] ** DB **
+  - [ ] RDS
+  - [ ] S3
+- [ ] ** Secrets **
+  - [ ] make secrets into env variables in Vercel
+
 
 ## meeting notes (Ruby)
 
