@@ -1,7 +1,7 @@
 import type { NextPage, GetServerSideProps } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Client } from 'pg';
 import { handleGetUnsoldProducts } from '../db/queryHandlers';
 
@@ -14,15 +14,12 @@ import type { Product } from '../interfaces';
 
 import { allProducts } from '../lib/db';
 import DeleteButton from '../components/DeleteButton';
-import { ProductsContextProvider } from '../lib/context';
+import { ProductsContext } from '../lib/context';
 
 
-type Props = {
-  data: Product[];
-};
-
-const Home: NextPage<Props> = ({ data }: Props) => {
-  const products = data;
+const Home: NextPage = () => {
+  const products = useContext(ProductsContext)
+  //console.log(products)
   const isAdmin = true;
   const [showProductForm, setShowProductForm] = useState(false);
 
@@ -76,9 +73,9 @@ const Home: NextPage<Props> = ({ data }: Props) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const products = await handleGetUnsoldProducts();
-  return { props: { data: products } };
-};
+// export const getServerSideProps: GetServerSideProps = async () => {
+//   const products = await handleGetUnsoldProducts();
+//   return { props: { data: products } };
+// };
 
 export default Home;

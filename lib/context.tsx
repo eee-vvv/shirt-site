@@ -43,7 +43,8 @@ const handleLoad = async () => {
     }
   });
   const result = await response.json();
-  return result
+  console.log('result',result.products)
+  return result.products
 };
 
 

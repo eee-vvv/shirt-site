@@ -9,7 +9,7 @@ import type { Product } from '../interfaces/index';
 type Props = {
   data: Product | null;
 };
-
+// TODO: refactor to pull products from context instead of db
 const ProductPage: NextPage<Props> = ({ data }: Props) => {
   const product = data;
 
