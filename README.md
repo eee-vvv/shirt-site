@@ -24,6 +24,7 @@
   - [ ] Orders are written to the database when a user succesfully checks out (cart -> order)
 - [ ] set up stripe to work locally
 - [ ] **CMS**
+  - [ ] view sold products
   - [ ] allow admin to manage inventory and orders without our help
   - [ ] ADD NEW PRODUCTS
     - [ ] have newly added products appear immediatley
