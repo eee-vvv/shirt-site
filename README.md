@@ -17,6 +17,7 @@
 - [ ] put Ruby's images in local storage and try to simulate how we'll fetch images
 - [ ] **Cart**
   - [ ] Users can browse shirts and add items to their carts without logging in
+    - [ ] Products can be added to cart from the single product page and from the all product page (Add to Cart Button)
   - [ ] Users can remove items from the shopping cart
   - [ ] shopping cart persists between browser sessions (times out eventually)
   - [ ] If an item has already been bought when user tries to check it out, they get a "nolonger available" message
