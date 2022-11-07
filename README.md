@@ -26,10 +26,9 @@
 - [ ] **CMS**
   - [ ] view sold products
   - [ ] allow admin to manage inventory and orders without our help
-  - [ ] ADD NEW PRODUCTS
-    - [ ] have newly added products appear immediatley
-      - [ ] refresh automatically for now
-    - [ ] in-site notification for added product
+  - [x] ADD NEW PRODUCTS
+    - [x] have newly added products appear immediatley
+      - [x] refresh automatically for now
   - [ ] EDIT ALREADY EXISTING PRODUCTS
     - [ ] submit
       - [ ] write to DB
@@ -37,9 +36,9 @@
       - [ ] sumbit closes form
     - [ ] validate entries
     - [ ] finish controled form behavior
-  - [ ] DELETE PRODUCTS
-    - [ ] refresh/update automatically
-    - [ ] extract delete button component and put it in individual product component
+  - [x] DELETE PRODUCTS
+    - [x] refresh/update automatically
+    - [x] extract delete button component and put it in individual product component
   - [ ] **AUTH**: admin can securely log in via Google auth in order to access CMS and make changes to inventory
 - [ ] **Style**
   - [ ] 1) Make site look polished/like a fairly accurate prototype
