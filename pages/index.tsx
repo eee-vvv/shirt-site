@@ -13,6 +13,7 @@ import styles from '../styles/Home.module.css'
 import type { Product } from '../interfaces';
 
 import { allProducts } from '../lib/db';
+import DeleteButton from '../components/DeleteButton';
 
 type Props = {
   data: Product[];
@@ -27,20 +28,6 @@ const Home: NextPage<Props> = ({ data }: Props) => {
     setShowProductForm((prev) => !prev);
   };
 
-  // TODO:
-  //  1) Make delete button into its own module so it can be reused
-  //  2) Client-side handling of multiple clicks
-  const handleDeleteSingleProduct = async (id:number) => {
-    const response = await fetch(`/api/product/${id}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify('product deleted'),
-    });
-    const result = await response.json();
-    return result.data;
-  }
 
   return (
     <div>
@@ -77,8 +64,8 @@ const Home: NextPage<Props> = ({ data }: Props) => {
                 <ProductCard
                   product={product}
                 />
-                {isAdmin && 
-                <button onClick={() => handleDeleteSingleProduct(product.id)}>delete</button>}
+                {isAdmin &&
+                  <DeleteButton id={product.id} buttonContent="Delete" />}
               </div>
             ))}
           </div>
