@@ -31,12 +31,12 @@
       - [ ] refresh automatically for now
     - [ ] in-site notification for added product
   - [ ] EDIT ALREADY EXISTING PRODUCTS
-    - [ ] submit
-      - [ ] write to DB
-      - [ ] edits apear immediatley
+    - [x] submit
+      - [x] write to DB
+      - [x] edits apear immediatley
       - [ ] sumbit closes form
     - [ ] validate entries
-    - [ ] finish controled form behavior
+    - [x] finish controled form behavior
   - [ ] DELETE PRODUCTS
     - [ ] refresh/update automatically
     - [ ] extract delete button component and put it in individual product component
