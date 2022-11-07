@@ -42,6 +42,7 @@ const AddProductForm = () => {
     };
 
     const newProductRes = postNewProductToDatabase(productToSubmit)
+      //TODO: flesh out error handling below
       .then((product) => {
         if (product.id) {
           router.reload()

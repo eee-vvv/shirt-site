@@ -1,4 +1,10 @@
 .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navContainer {
   padding: 15px;
 }
 
@@ -13,5 +19,19 @@
 }
 
 .navLink:active {
+  background-color: #e889b5;
+}
+
+.cartThumbnail {
+  border: 1px solid black;
+  padding: 5px;
+  margin: 3px;
+}
+
+.cartThumbnail:hover {
+  background-color: #d64086;
+}
+
+.cartThumbnail:active {
   background-color: #e889b5;
 }
