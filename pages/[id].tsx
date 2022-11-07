@@ -108,6 +108,7 @@ function EditProductForm({ product, setShowEdit }: EditProductFormProps) {
     console.log('submitting!');
     const editedProductRes = editProductInDatabase(editedProduct)
     console.log('new product response in handleSubmit: ', editedProductRes)
+    setShowEdit((prev: Boolean) => !prev)
   };
 
   return (
