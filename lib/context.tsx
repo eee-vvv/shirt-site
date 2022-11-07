@@ -1,3 +1,4 @@
+import { GetServerSideProps } from 'next/types';
 import { useState, useEffect, createContext } from 'react';
 import { handleGetUnsoldProducts } from '../db/queryHandlers';
 import type { Product } from '../interfaces';
@@ -11,21 +12,16 @@ type Props = {
 const ProductsContextProvider = ({ children }: Props) => {
   const [products, setProducts] = useState<Product[]>([]);
 
-  useEffect(() => {
-    handleGetUnsoldProducts()
-      .then((products) => {
-        if (products) {
-          setProducts(products);
-        } else {
-          console.log(
-            'whoops! handleGetUnsoldProducts promise resolved to type null'
-          );
-        }
-      })
-      .catch((e) => {
-        console.error('error fetching products: ', e);
-      });
-  }, []);
+  useEffect( () => {
+    handleLoad().then( (products) => {
+      if (products){
+        setProducts(products)
+      }
+      else {
+        console.log("no prodcuts loaded")
+      }
+    })
+  }, [])
 
   return (
     <ProductsContext.Provider value={products}>
@@ -33,5 +29,22 @@ const ProductsContextProvider = ({ children }: Props) => {
     </ProductsContext.Provider>
   );
 };
+
+// export const getServerSideProps: GetServerSideProps = async () => {
+//   const products = await handleGetUnsoldProducts();
+//   return { props: { data: products } };
+// };
+
+const handleLoad = async () => {
+  const response = await fetch(`/api/products`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  });
+  const result = await response.json();
+  return result
+};
+
 
 export { ProductsContext, ProductsContextProvider };

@@ -14,6 +14,8 @@ import type { Product } from '../interfaces';
 
 import { allProducts } from '../lib/db';
 import DeleteButton from '../components/DeleteButton';
+import { ProductsContextProvider } from '../lib/context';
+
 
 type Props = {
   data: Product[];
@@ -67,6 +69,7 @@ const Home: NextPage<Props> = ({ data }: Props) => {
           </div>
         </div>
       </main>
+
 
       <footer></footer>
     </div>
