@@ -1,6 +1,7 @@
 import { Client, QueryResult } from 'pg'
 import { clientSecrets } from './dbSecrets'
 import type { Product, NewProduct } from '../interfaces';
+import { useRouter } from 'next/router'
 
 
 async function clientConnect(): Promise<Client|Error>{
@@ -89,7 +90,7 @@ export async function handlePostProduct(p: NewProduct): Promise<Product|null> {
         RETURNING *
         ;`,
         values);
-      return res.rows[0]    
+      return res.rows[0]
     } catch (e) {
       console.error('error in /api/product/id handlePost method: ', e);
       return null
@@ -104,7 +105,7 @@ export async function handleEditProduct(p:Product): Promise<Product|null> {
     }
   let values = [p.id, p.name, p.price, p.measurements, p.description, p.sold, p.imagesId]
   const res = await client.query(
-    `UPDATE product 
+    `UPDATE product
     SET
     name = $2,
     price = $3,
@@ -116,7 +117,7 @@ export async function handleEditProduct(p:Product): Promise<Product|null> {
     RETURNING *
     ;`,
     values);
-    return res.rows[0] 
+    return res.rows[0]
   } catch (e) {
     console.error('error in /api/product/id handleEdit method: ', e);
     return null
