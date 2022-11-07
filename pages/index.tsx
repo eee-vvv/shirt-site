@@ -8,7 +8,7 @@ import { handleGetUnsoldProducts } from '../db/queryHandlers';
 import ProductCard from '../components/ProductCard';
 import AddProductForm from '../components/AddProductForm';
 
-import styles from '../styles/Home.module.css'
+import styles from '../styles/Home.module.css';
 
 import type { Product } from '../interfaces';
 
@@ -20,14 +20,13 @@ type Props = {
 };
 
 const Home: NextPage<Props> = ({ data }: Props) => {
-  const products = data
+  const products = data;
   const isAdmin = true;
   const [showProductForm, setShowProductForm] = useState(false);
 
   const handleProductFormToggle = () => {
     setShowProductForm((prev) => !prev);
   };
-
 
   return (
     <div>
@@ -48,9 +47,7 @@ const Home: NextPage<Props> = ({ data }: Props) => {
               (showProductForm ? (
                 <div>
                   <AddProductForm />
-                  <button onClick={handleProductFormToggle}>
-                    Hide New Product Form
-                  </button>
+                  <button onClick={handleProductFormToggle}>Cancel</button>
                 </div>
               ) : (
                 <button onClick={handleProductFormToggle}>
@@ -61,11 +58,10 @@ const Home: NextPage<Props> = ({ data }: Props) => {
           <div className={styles.productCardsContainer}>
             {products.map((product: Product) => (
               <div key={product.id}>
-                <ProductCard
-                  product={product}
-                />
-                {isAdmin &&
-                  <DeleteButton id={product.id} buttonContent="Delete" />}
+                <ProductCard product={product} />
+                {isAdmin && (
+                  <DeleteButton id={product.id} buttonContent="Delete" />
+                )}
               </div>
             ))}
           </div>
@@ -78,8 +74,8 @@ const Home: NextPage<Props> = ({ data }: Props) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const products = await handleGetUnsoldProducts()
-  return { props: { data: products }}
+  const products = await handleGetUnsoldProducts();
+  return { props: { data: products } };
 };
 
 export default Home;
