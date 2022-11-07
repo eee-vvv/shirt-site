@@ -1,9 +1,11 @@
 import React from 'react';
 import { useState } from 'react';
-import type { NewProduct, JSONProduct } from '../interfaces/index'
-
+import { useRouter } from 'next/router';
+import type { NewProduct, JSONProduct } from '../interfaces/index';
 
 const AddProductForm = () => {
+  const router = useRouter();
+
   const [product, setProduct] = useState({
     name: '',
     price: '0',
@@ -15,10 +17,14 @@ const AddProductForm = () => {
   const handleChange = (e: React.FormEvent) => {
     const target = e.target as HTMLTextAreaElement;
     const tempProduct = { ...product };
-    if (target.name === 'price' && isNaN(parseInt(target.value)) && target.value != ''){
-      console.log(target.value)
+    if (
+      target.name === 'price' &&
+      isNaN(parseInt(target.value)) &&
+      target.value != ''
+    ) {
+      console.log(target.value);
       tempProduct[target.name as keyof JSONProduct] = '';
-      alert('please enter a number')
+      alert('please enter a number');
     } else {
       tempProduct[target.name as keyof JSONProduct] = target.value;
     }
@@ -32,9 +38,20 @@ const AddProductForm = () => {
     const productToSubmit = {
       ...product,
       price: parseInt(product.price),
-      sold: false
-    }
-    const newProductRes = postNewProductToDatabase(productToSubmit);
+      sold: false,
+    };
+
+    const newProductRes = postNewProductToDatabase(productToSubmit)
+      .then((product) => {
+        if (product.id) {
+          router.reload()
+        } else {
+          console.log('something went wrong...');
+        }
+      })
+      .catch((e) => {
+        console.log('something went wrong (CATCH)...');
+      });
     console.log('new product response in handleSubmit: ', newProductRes);
   };
 
@@ -47,7 +64,8 @@ const AddProductForm = () => {
       body: JSON.stringify(product),
     });
     const result = await response.json();
-    return result.data;
+    console.log('result in postNewProduct --> ', result);
+    return result.products[0];
   };
 
   return (
