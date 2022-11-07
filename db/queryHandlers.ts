@@ -1,6 +1,6 @@
 import { Client, QueryResult } from 'pg'
 import { clientSecrets } from './dbSecrets'
-import type { Product } from '../interfaces';
+import type { Product, NewProduct } from '../interfaces';
 
 
 async function clientConnect(): Promise<Client|Error>{
@@ -69,7 +69,7 @@ export async function handleDeleteProduct(id: number): Promise<number|null>{
   }
 }
 
-export async function handlePostProduct(p: Product): Promise<Product|null> {
+export async function handlePostProduct(p: NewProduct): Promise<Product|null> {
   try {
     const client = await clientConnect()
     if (client instanceof Error){

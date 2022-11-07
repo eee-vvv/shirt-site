@@ -133,7 +133,7 @@ function EditProductForm({ product, setShowEdit }: EditProductFormProps) {
       </div>
       <div>
         <label>Sold</label>
-        <select value={`${product.sold}`} name="sold" onChange={handleChange}>
+        <select value={`${editedProduct.sold}`} name="sold" onChange={handleChange}>
           <option value="false">No</option>
           <option value="true">Yes</option>
         </select>

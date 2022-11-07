@@ -57,7 +57,3 @@ export default async function allProductHandler(
       break;
   }
 }
-
-/*
-curl -H "Content-Type: application/json" -X POST -d '{"name":"POST_TEST","price":"123","measurements":"POST_TEST","description":"POST_TEST","sold":"false",imagesId:"POST_TEST"}' http://localhost:3000/api/products
-*/
