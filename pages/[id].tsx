@@ -91,9 +91,23 @@ function EditProductForm({ product, setShowEdit }: EditProductFormProps) {
     });
   };
 
+  const editProductInDatabase = async (editedProduct: Product) => {
+    const response = await fetch(`/api/product/${product.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(editedProduct),
+    });
+    const result = await response.json();
+    return result.data;
+  };
+
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     console.log('submitting!');
+    const editedProductRes = editProductInDatabase(editedProduct)
+    console.log('new product response in handleSubmit: ', editedProductRes)
   };
 
   return (

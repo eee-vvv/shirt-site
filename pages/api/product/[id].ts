@@ -1,6 +1,6 @@
 import { Client } from 'pg'
 import { Product } from '../../../interfaces'
-import { handleDeleteProduct } from '../../../db/queryHandlers';
+import { handleDeleteProduct, handleEditProduct } from '../../../db/queryHandlers';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function singleProductHandler(
@@ -10,6 +10,7 @@ export default async function singleProductHandler(
   const {
     query,
     method,
+    body,
   } = req;
 
   // TODO: more robust error handling
@@ -34,9 +35,17 @@ export default async function singleProductHandler(
       } else {
         res.status(400).json({message: `product with id# ${id} not in database`})
       }
-      break
+      break;
+    case 'PUT':
+      const editedProduct = await handleEditProduct(body)
+      if (editedProduct){
+        res.status(200).json({message: `product edited`})
+      } else {
+        res.status(400).json({message: `there was an error with the update query`})
+      }
+      break; 
     default:
-      res.setHeader('Allow', ['GET','DELETE']);
+      res.setHeader('Allow', ['GET','DELETE','PUT']);
       res.status(405).end(`Method ${method} Not Allowed`);
   }
 }

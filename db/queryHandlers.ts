@@ -91,7 +91,34 @@ export async function handlePostProduct(p: NewProduct): Promise<Product|null> {
         values);
       return res.rows[0]    
     } catch (e) {
-    console.error('error in /api/products handlePost method: ', e);
+      console.error('error in /api/product/id handlePost method: ', e);
+      return null
+  }
+}
+
+export async function handleEditProduct(p:Product): Promise<Product|null> {
+  try {
+    const client = await clientConnect()
+    if (client instanceof Error){
+      throw client
+    }
+  let values = [p.id, p.name, p.price, p.measurements, p.description, p.sold, p.imagesId]
+  const res = await client.query(
+    `UPDATE product 
+    SET
+    name = $2,
+    price = $3,
+    measurements = $4,
+    description = $5,
+    sold = $6,
+    imagesId = $7
+    WHERE id = $1
+    RETURNING *
+    ;`,
+    values);
+    return res.rows[0] 
+  } catch (e) {
+    console.error('error in /api/product/id handleEdit method: ', e);
     return null
   }
 }
