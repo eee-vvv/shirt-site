@@ -1,8 +1,17 @@
 import Link from 'next/link';
 import React from 'react';
+import { useState } from 'react';
 import styles from '../styles/Navbar.module.css';
 
+import Cart from './Cart';
+
 const Navbar = () => {
+  const [showCart, setShowCart] = useState(false)
+
+  const handleToggleCart = () => {
+    setShowCart((prev) => !prev)
+  }
+
   return (
     <div className={styles.container}>
       <nav className={styles.navContainer}>
@@ -13,7 +22,7 @@ const Navbar = () => {
           <a className={styles.navLink}>About</a>
         </Link>
       </nav>
-      <div className={styles.cartThumbnail}>
+      <div className={styles.cartThumbnail} onClick={handleToggleCart}>
         Cart
       </div>
     </div>
