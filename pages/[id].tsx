@@ -74,6 +74,7 @@ type EditProductFormProps = {
 };
 
 function EditProductForm({ product, setShowEdit }: EditProductFormProps) {
+  const router = useRouter();
   const [editedProduct, setEditedProduct] = useState({ ...product });
 
   console.log('edited product: ', editedProduct);
@@ -100,15 +101,24 @@ function EditProductForm({ product, setShowEdit }: EditProductFormProps) {
       body: JSON.stringify(editedProduct),
     });
     const result = await response.json();
-    return result.data;
+    return result;
   };
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    console.log('submitting!');
     const editedProductRes = editProductInDatabase(editedProduct)
-    console.log('new product response in handleSubmit: ', editedProductRes)
-    setShowEdit((prev: Boolean) => !prev)
+      .then((product) => {
+        if (product.message === 'product edited') {
+          router.reload();
+        } else {
+          console.log('something went wrong...');
+        }
+      })
+      .catch((e) => {
+        console.log('something went wrong (catch) --> ', e);
+      });
+    console.log('new product response in handleSubmit: ', editedProductRes);
+    setShowEdit((prev: Boolean) => !prev);
   };
 
   return (
@@ -148,7 +158,11 @@ function EditProductForm({ product, setShowEdit }: EditProductFormProps) {
       </div>
       <div>
         <label>Sold</label>
-        <select value={`${editedProduct.sold}`} name="sold" onChange={handleChange}>
+        <select
+          value={`${editedProduct.sold}`}
+          name="sold"
+          onChange={handleChange}
+        >
           <option value="false">No</option>
           <option value="true">Yes</option>
         </select>

@@ -6,11 +6,11 @@ import styles from '../styles/Navbar.module.css';
 import Cart from './Cart';
 
 const Navbar = () => {
-  const [showCart, setShowCart] = useState(false)
+  const [showCart, setShowCart] = useState(false);
 
   const handleToggleCart = () => {
-    setShowCart((prev) => !prev)
-  }
+    setShowCart((prev) => !prev);
+  };
 
   return (
     <div className={styles.container}>
@@ -22,9 +22,13 @@ const Navbar = () => {
           <a className={styles.navLink}>About</a>
         </Link>
       </nav>
-      <div className={styles.cartThumbnail} onClick={handleToggleCart}>
-        Cart
-      </div>
+      {showCart ? (
+        <Cart />
+      ) : (
+        <div className={styles.cartThumbnail} onClick={handleToggleCart}>
+          Cart
+        </div>
+      )}
     </div>
   );
 };

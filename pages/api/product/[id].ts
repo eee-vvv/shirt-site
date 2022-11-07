@@ -1,26 +1,25 @@
-import { Client } from 'pg'
-import { Product } from '../../../interfaces'
-import { handleDeleteProduct, handleEditProduct } from '../../../db/queryHandlers';
+import { Client } from 'pg';
+import { Product } from '../../../interfaces';
+import {
+  handleDeleteProduct,
+  handleEditProduct,
+} from '../../../db/queryHandlers';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function singleProductHandler(
   req: NextApiRequest,
-  res: NextApiResponse<Product|{message:String}>
+  res: NextApiResponse<Product | { message: String }>
 ) {
-  const {
-    query,
-    method,
-    body,
-  } = req;
+  const { query, method, body } = req;
 
   // TODO: more robust error handling
 
-  if (typeof(query.id) != 'string') {
-    res.status(400)
-    return
+  if (typeof query.id != 'string') {
+    res.status(400);
+    return;
   }
 
-  const id = parseInt(query.id)
+  const id = parseInt(query.id);
 
   switch (method) {
     case 'GET': // TODO: change to async await syntax
@@ -29,23 +28,27 @@ export default async function singleProductHandler(
       });
       break;
     case 'DELETE':
-      const productsDeleted = await handleDeleteProduct(id)
-      if (productsDeleted){
-        res.status(200).json({message: `product deleted`})
+      const productsDeleted = await handleDeleteProduct(id);
+      if (productsDeleted) {
+        res.status(200).json({ message: `product deleted` });
       } else {
-        res.status(400).json({message: `product with id# ${id} not in database`})
+        res
+          .status(400)
+          .json({ message: `product with id# ${id} not in database` });
       }
       break;
     case 'PUT':
-      const editedProduct = await handleEditProduct(body)
-      if (editedProduct){
-        res.status(200).json({message: `product edited`})
+      const editedProduct = await handleEditProduct(body);
+      if (editedProduct) {
+        res.status(200).json({ message: `product edited` });
       } else {
-        res.status(400).json({message: `there was an error with the update query`})
+        res
+          .status(400)
+          .json({ message: `there was an error with the update query` });
       }
-      break; 
+      break;
     default:
-      res.setHeader('Allow', ['GET','DELETE','PUT']);
+      res.setHeader('Allow', ['GET', 'DELETE', 'PUT']);
       res.status(405).end(`Method ${method} Not Allowed`);
   }
 }
@@ -62,7 +65,7 @@ async function handleGet(id: number) {
       WHERE ProductID = $1;`,
       [id]
     );
-    return res.rows[0]
+    return res.rows[0];
   } catch (e) {
     console.error('error in /api/product/[id] handleGet method: ', e);
   }
