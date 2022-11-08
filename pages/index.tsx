@@ -14,12 +14,13 @@ import type { Product } from '../interfaces';
 
 import { allProducts } from '../lib/db';
 import DeleteButton from '../components/DeleteButton';
-import { ProductsContext } from '../lib/context';
+import { CartContext, ProductsContext } from '../lib/context';
 
 
 const Home: NextPage = () => {
   const products = useContext(ProductsContext)
-  //console.log(products)
+  const [cartProducts, setCartProducts] = useContext(CartContext)
+  //console.log(cartProducts)
   const isAdmin = true;
   const [showProductForm, setShowProductForm] = useState(false);
 
@@ -61,6 +62,13 @@ const Home: NextPage = () => {
                 {isAdmin && (
                   <DeleteButton id={product.id} buttonContent="Delete" />
                 )}
+                {
+                <button 
+                key={product.id} 
+                onClick={() => setCartProducts([...cartProducts, product.id])}> 
+                add to cart
+                </button>
+                }
               </div>
             ))}
           </div>

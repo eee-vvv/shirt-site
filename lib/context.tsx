@@ -4,10 +4,12 @@ import { handleGetUnsoldProducts } from '../db/queryHandlers';
 import type { Product } from '../interfaces';
 
 const ProductsContext = createContext<Product[]>([]);
+const CartContext = createContext<[number[],(c: number[]) => void]>([[],()=>{}]);
 
 type Props = {
   children: React.ReactNode;
 };
+
 
 const ProductsContextProvider = ({ children }: Props) => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -30,11 +32,6 @@ const ProductsContextProvider = ({ children }: Props) => {
   );
 };
 
-// export const getServerSideProps: GetServerSideProps = async () => {
-//   const products = await handleGetUnsoldProducts();
-//   return { props: { data: products } };
-// };
-
 const handleLoad = async () => {
   const response = await fetch(`/api/products`, {
     method: 'GET',
@@ -48,4 +45,19 @@ const handleLoad = async () => {
 };
 
 
-export { ProductsContext, ProductsContextProvider };
+// const CartContextProvider = ({ children }: Props) => {
+//   const [cartProducts, setCartProducts] = useState<number[]>(getInitialState());
+
+//   useEffect(() => {
+//     localStorage.setItem('cartProducts', JSON.stringify(cartProducts))
+//   }, [cartProducts])
+
+//   return (
+//     <CartContext.Provider value={[cartProducts, setCartProducts]}>
+//       {children}
+//     </CartContext.Provider>
+//   );
+// }
+
+
+export { ProductsContext, ProductsContextProvider, CartContext};
