@@ -14,7 +14,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [cartProducts, setCartProducts] = useState(getInitialCartState())
 
   useEffect(() => {
-    console.log('context:', cartProducts)
+    console.log('cart context:', cartProducts)
     localStorage.setItem('cartProducts', JSON.stringify(cartProducts))
   }, [cartProducts])
 

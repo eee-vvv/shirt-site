@@ -40,7 +40,6 @@ const handleLoad = async () => {
     }
   });
   const result = await response.json();
-  console.log('result',result.products)
   return result.products
 };
 
