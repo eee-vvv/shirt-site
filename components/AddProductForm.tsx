@@ -3,6 +3,10 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import type { NewProduct, JSONProduct } from '../interfaces/index';
 
+// temporary
+const getRandom = (min: number, max: number) =>
+  Math.floor(Math.random() * (max - min + 1) + min);
+
 const AddProductForm = () => {
   const router = useRouter();
 
@@ -11,7 +15,7 @@ const AddProductForm = () => {
     price: '0',
     description: '',
     measurements: '',
-    imagesId: 'xxx',
+    imagesId: `${getRandom(1, 5)}`,
   });
 
   const handleChange = (e: React.FormEvent) => {
@@ -45,7 +49,7 @@ const AddProductForm = () => {
       //TODO: flesh out error handling below
       .then((product) => {
         if (product.id) {
-          router.reload()
+          router.reload();
         } else {
           console.log('something went wrong...');
         }
