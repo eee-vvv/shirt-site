@@ -1,0 +1,25 @@
+.container {
+  border: 2px solid black;
+  padding: 12px;
+  margin: 5px;
+  background-color: aquamarine;
+}
+
+.header {
+  font-size: larger;
+  font-weight: 500;
+}
+
+.shirtList {
+  border: 1px solid black;
+  padding: 4px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.row > * {
+  padding: 3px;
+}
