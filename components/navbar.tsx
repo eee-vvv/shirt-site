@@ -23,7 +23,7 @@ const Navbar = () => {
         </Link>
       </nav>
       {showCart ? (
-        <Cart />
+        <Cart toggle={handleToggleCart} />
       ) : (
         <div className={styles.cartThumbnail} onClick={handleToggleCart}>
           Cart
