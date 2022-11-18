@@ -31,7 +31,7 @@ const Home: NextPage = () => {
   return (
     <div>
       <Head>
-        <title>shirts</title>
+        <title>mary cave</title>
         <meta name="description" content="A site to buy shirts" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -63,9 +63,9 @@ const Home: NextPage = () => {
                   <DeleteButton id={product.id} buttonContent="Delete" />
                 )}
                 {
-                <button 
-                key={product.id} 
-                onClick={() => setCartProducts([...cartProducts, product.id])}> 
+                <button
+                key={product.id}
+                onClick={() => setCartProducts([...cartProducts, product.id])}>
                 add to cart
                 </button>
                 }
