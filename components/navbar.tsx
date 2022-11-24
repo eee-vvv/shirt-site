@@ -9,7 +9,7 @@ import Cart from './Cart';
 const Navbar = () => {
   const [showCart, setShowCart] = useState(false);
   const [cartContext, setCartContext] = useContext(CartContext);
-  const cartLength = cartContext.length
+  const cartLength = cartContext.length;
 
   const handleToggleCart = () => {
     setShowCart((prev) => !prev);
