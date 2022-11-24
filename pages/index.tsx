@@ -7,6 +7,7 @@ import { handleGetUnsoldProducts } from '../db/queryHandlers';
 
 import ProductCard from '../components/ProductCard';
 import AddProductForm from '../components/AddProductForm';
+import AddToCartButton from '../components/AddToCartButton';
 
 import styles from '../styles/Home.module.css';
 
@@ -16,10 +17,9 @@ import { allProducts } from '../lib/db';
 import DeleteButton from '../components/DeleteButton';
 import { CartContext, ProductsContext } from '../lib/context';
 
-
 const Home: NextPage = () => {
-  const products = useContext(ProductsContext)
-  const [cartProducts, setCartProducts] = useContext(CartContext)
+  const products = useContext(ProductsContext);
+  const [cartProducts, setCartProducts] = useContext(CartContext);
   //console.log(cartProducts)
   const isAdmin = true;
   const [showProductForm, setShowProductForm] = useState(false);
@@ -62,19 +62,12 @@ const Home: NextPage = () => {
                 {isAdmin && (
                   <DeleteButton id={product.id} buttonContent="Delete" />
                 )}
-                {
-                <button
-                key={product.id}
-                onClick={() => setCartProducts([...cartProducts, product.id])}>
-                add to cart
-                </button>
-                }
+                {<AddToCartButton id={product.id} buttonContent="Add to cart" />}
               </div>
             ))}
           </div>
         </div>
       </main>
-
 
       <footer></footer>
     </div>

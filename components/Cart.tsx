@@ -14,6 +14,7 @@ type CartShirtProps = {
 
 const Cart = ({ toggle }: Props) => {
   const [cartContext, setCartContext] = useContext(CartContext);
+
   const productsContext = useContext(ProductsContext);
   return (
     <div className={styles.container}>
