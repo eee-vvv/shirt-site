@@ -19,17 +19,23 @@ const Cart = ({ toggle }: Props) => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>Cart</div>
-      <div className={styles.shirtList}>
-        {cartContext.map((id) => {
-          const product = productsContext.find((product) => product.id === id);
-          console.log(`product ${id}:`);
-          console.log(product);
+      {cartContext.length > 0 ?
+        <div className={styles.shirtList}>
+          {cartContext.map((id) => {
+            const product = productsContext.find(
+              (product) => product.id === id
+            );
+            console.log(`product ${id}:`);
+            console.log(product);
 
-          if (!product) return <li>Product not found...</li>;
+            if (!product) return <li>Product not found...</li>;
 
-          return <CartShirt key={product.id} product={product} />;
-        })}
-      </div>
+            return <CartShirt key={product.id} product={product} />;
+          })}
+        </div>
+        :
+        <div>cart is empty.. add something!</div>
+      }
       <button onClick={toggle}>Close</button>
     </div>
   );
