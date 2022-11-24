@@ -2,6 +2,7 @@ import { MouseEventHandler, useContext } from 'react';
 import { Product } from '../interfaces';
 import { CartContext, ProductsContext } from '../lib/context';
 import styles from '../styles/Cart.module.css';
+import RemoveFromCartButton from './RemoveFromCartButton';
 
 type Props = {
   toggle: MouseEventHandler;
@@ -36,7 +37,7 @@ const Cart = ({ toggle }: Props) => {
 const CartShirt = ({ product }: CartShirtProps) => {
   return (
     <div className={styles.row}>
-      <button>X</button>
+      <RemoveFromCartButton id={product.id} />
       <div>IMG</div>
       <div>{product.name}</div>
       <div>${product.price}</div>
