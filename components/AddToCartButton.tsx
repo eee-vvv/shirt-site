@@ -10,14 +10,16 @@ const AddToCartButton = ({ id, buttonContent }: Props) => {
   const [cartContext, setCartContext] = useContext(CartContext);
 
   const handleClick = () => {
-    console.log('click');
+    const alreadyInCart = cartContext.includes(id);
+
+    if (!alreadyInCart) {
+      setCartContext([...cartContext, id]);
+    } else {
+      console.log('already in cart')
+    }
   };
 
-  return (
-    <button key={id} onClick={() => setCartContext([...cartContext, id])}>
-      {buttonContent}
-    </button>
-  );
+  return <button onClick={handleClick}>{buttonContent}</button>;
 };
 
 export default AddToCartButton;
