@@ -16,7 +16,7 @@ const Cart = ({ toggle }: Props) => {
   const [cartContext, setCartContext] = useContext(CartContext);
   const productsContext = useContext(ProductsContext);
 
-  const notEmpty = cartContext.length > 0
+  const notEmpty = cartContext.length > 0;
 
   return (
     <div className={styles.container}>
