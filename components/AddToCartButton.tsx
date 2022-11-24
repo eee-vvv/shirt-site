@@ -15,7 +15,7 @@ const AddToCartButton = ({ id, buttonContent }: Props) => {
     if (!alreadyInCart) {
       setCartContext([...cartContext, id]);
     } else {
-      console.log('already in cart')
+      console.log('already in cart');
     }
   };
 
