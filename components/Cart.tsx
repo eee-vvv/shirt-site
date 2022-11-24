@@ -14,12 +14,14 @@ type CartShirtProps = {
 
 const Cart = ({ toggle }: Props) => {
   const [cartContext, setCartContext] = useContext(CartContext);
-
   const productsContext = useContext(ProductsContext);
+
+  const notEmpty = cartContext.length > 0
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>Cart</div>
-      {cartContext.length > 0 ?
+      {notEmpty ? (
         <div className={styles.shirtList}>
           {cartContext.map((id) => {
             const product = productsContext.find(
@@ -33,10 +35,11 @@ const Cart = ({ toggle }: Props) => {
             return <CartShirt key={product.id} product={product} />;
           })}
         </div>
-        :
+      ) : (
         <div>cart is empty.. add something!</div>
-      }
+      )}
       <button onClick={toggle}>Close</button>
+      {notEmpty && <button>Check Out</button>}
     </div>
   );
 };
