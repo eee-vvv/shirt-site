@@ -16,6 +16,12 @@ const Cart = ({ toggle }: Props) => {
   const [cartContext, setCartContext] = useContext(CartContext);
   const productsContext = useContext(ProductsContext);
 
+  const totalPrice = cartContext.reduce((sum, currentId) => {
+    const product = productsContext.find((product) => product.id === currentId);
+    if (!product) return sum;
+    return sum + product.price;
+  }, 0);
+
   const notEmpty = cartContext.length > 0;
 
   return (
@@ -34,6 +40,7 @@ const Cart = ({ toggle }: Props) => {
 
             return <CartShirt key={product.id} product={product} />;
           })}
+          <div>Total: ${totalPrice}</div>
         </div>
       ) : (
         <div>cart is empty.. add something!</div>

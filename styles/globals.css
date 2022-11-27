@@ -27,6 +27,10 @@ button:active {
   background-color: #4aed62;
 }
 
+nav {
+  position: relative;
+}
+
 a {
   color: inherit;
   text-decoration: none;
