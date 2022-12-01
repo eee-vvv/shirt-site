@@ -6,6 +6,7 @@
   padding: 12px;
   margin: 5px;
   background-color: aquamarine;
+  z-index: 5;
 }
 
 .header {
@@ -16,11 +17,12 @@
 .shirtList {
   border: 1px solid black;
   padding: 4px;
+  /* display: flex; */
+  /* grid-template-columns: 30px 30px 30px 30px; */
 }
 
 .row {
-  display: flex;
-  justify-content: space-between;
+  display: flex; /* TODO: this shouldn't be flex in the end */
 }
 
 .row > * {

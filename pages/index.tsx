@@ -21,7 +21,7 @@ const Home: NextPage = () => {
   const products = useContext(ProductsContext);
   const [cartProducts, setCartProducts] = useContext(CartContext);
   //console.log(cartProducts)
-  const isAdmin = true;
+  const isAdmin = false;
   const [showProductForm, setShowProductForm] = useState(false);
 
   const handleProductFormToggle = () => {
@@ -38,8 +38,6 @@ const Home: NextPage = () => {
 
       <main>
         <div className="page-container">
-          <h1>Shirts</h1>
-
           {
             // if user is admin, render add product button or
             // new product form depending on toggle status
@@ -57,12 +55,19 @@ const Home: NextPage = () => {
           }
           <div className={styles.productCardsContainer}>
             {products.map((product: Product) => (
-              <div key={product.id}>
+              <div className={styles.cardContainer} key={product.id}>
                 <ProductCard product={product} />
-                {isAdmin && (
-                  <DeleteButton id={product.id} buttonContent="Delete" />
-                )}
-                {<AddToCartButton id={product.id} buttonContent="Add to cart" />}
+                <div className={styles.cardButtons}>
+                  {isAdmin && (
+                    <DeleteButton id={product.id} buttonContent="Delete" />
+                  )}
+                  {
+                    <AddToCartButton
+                      id={product.id}
+                      buttonContent="Add to cart"
+                    />
+                  }
+                </div>
               </div>
             ))}
           </div>

@@ -5,6 +5,10 @@ import {
   handleEditProduct,
 } from '../../../db/queryHandlers';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import styles from '../../../styles/ProductPage.module.css'
+
+import productPic from '../public/fakeshirts/1.jpg';
+import Image from 'next/image';
 
 export default async function singleProductHandler(
   req: NextApiRequest,

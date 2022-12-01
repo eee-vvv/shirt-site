@@ -46,8 +46,9 @@ const ProductCard = ({ product }: ProductCardProps) => {
       <a>
         <div className={styles.productCard}>
           <div className={styles.name}>{name}</div>
-          <div>${price}</div>
+          <div className={styles.price}>${price}</div>
           <Image
+            className={styles.image}
             src={productImage}
             alt="product image (replace with meaningful alt text)"
           />

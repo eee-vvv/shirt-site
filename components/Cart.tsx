@@ -4,6 +4,14 @@ import { CartContext, ProductsContext } from '../lib/context';
 import styles from '../styles/Cart.module.css';
 import RemoveFromCartButton from './RemoveFromCartButton';
 
+import productPic from '../public/fakeshirts/1.jpg';
+import Image from 'next/image';
+
+// TODO: way of notifying user something has sold so it doesn't
+// feel like a bug
+
+// TODO: prevent "product not found bug...."
+
 type Props = {
   toggle: MouseEventHandler;
 };
@@ -24,9 +32,12 @@ const Cart = ({ toggle }: Props) => {
 
   const notEmpty = cartContext.length > 0;
 
+  const handleCheckOut = () => {
+    console.log('checking out!');
+  };
+
   return (
     <div className={styles.container}>
-      <div className={styles.header}>Cart</div>
       {notEmpty ? (
         <div className={styles.shirtList}>
           {cartContext.map((id) => {
@@ -43,10 +54,10 @@ const Cart = ({ toggle }: Props) => {
           <div>Total: ${totalPrice}</div>
         </div>
       ) : (
-        <div>cart is empty.. add something!</div>
+        <div>Cart is empty..add something!</div>
       )}
       <button onClick={toggle}>Close</button>
-      {notEmpty && <button>Check Out</button>}
+      {notEmpty && <button onClick={handleCheckOut}>Check Out</button>}
     </div>
   );
 };
@@ -55,7 +66,7 @@ const CartShirt = ({ product }: CartShirtProps) => {
   return (
     <div className={styles.row}>
       <RemoveFromCartButton id={product.id} />
-      <div>IMG</div>
+      {/* <Image src={productPic} alt="TODO" width="20px" height="20px" /> */}
       <div>{product.name}</div>
       <div>${product.price}</div>
     </div>

@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import type { NewProduct, JSONProduct } from '../interfaces/index';
 
+// TODO: alt text
+
 // temporary
 const getRandom = (min: number, max: number) =>
   Math.floor(Math.random() * (max - min + 1) + min);
