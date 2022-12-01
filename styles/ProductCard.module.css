@@ -1,6 +1,7 @@
 .productCard {
+  /* background-color: white; */
   border: 1px solid black;
-  padding: 10px;
+  padding: 15px;
   max-width: 400px;
   display: flex;
   flex-direction: column;
@@ -11,11 +12,17 @@
 .name {
   font-weight: bolder;
   font-size: 16px;
+  border-bottom: 1px solid black;
+  margin-bottom: 5px;
 }
 
-.image {
-  max-width: 200px;
+.price {
+  padding-bottom: 11px;
 }
+
+/* .image {
+  z-index: 0;
+} */
 
 .productCard:hover {
   background-color: #d64086;

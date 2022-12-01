@@ -1,12 +1,13 @@
 import type { NextPage, GetServerSideProps } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Client } from 'pg';
 import { handleGetUnsoldProducts } from '../db/queryHandlers';
 
 import ProductCard from '../components/ProductCard';
 import AddProductForm from '../components/AddProductForm';
+import AddToCartButton from '../components/AddToCartButton';
 
 import styles from '../styles/Home.module.css';
 
@@ -14,14 +15,13 @@ import type { Product } from '../interfaces';
 
 import { allProducts } from '../lib/db';
 import DeleteButton from '../components/DeleteButton';
+import { CartContext, ProductsContext } from '../lib/context';
 
-type Props = {
-  data: Product[];
-};
-
-const Home: NextPage<Props> = ({ data }: Props) => {
-  const products = data;
-  const isAdmin = true;
+const Home: NextPage = () => {
+  const products = useContext(ProductsContext);
+  const [cartProducts, setCartProducts] = useContext(CartContext);
+  //console.log(cartProducts)
+  const isAdmin = false;
   const [showProductForm, setShowProductForm] = useState(false);
 
   const handleProductFormToggle = () => {
@@ -31,15 +31,13 @@ const Home: NextPage<Props> = ({ data }: Props) => {
   return (
     <div>
       <Head>
-        <title>shirts</title>
+        <title>mary cave</title>
         <meta name="description" content="A site to buy shirts" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main>
         <div className="page-container">
-          <h1>Shirts</h1>
-
           {
             // if user is admin, render add product button or
             // new product form depending on toggle status
@@ -57,11 +55,19 @@ const Home: NextPage<Props> = ({ data }: Props) => {
           }
           <div className={styles.productCardsContainer}>
             {products.map((product: Product) => (
-              <div key={product.id}>
+              <div className={styles.cardContainer} key={product.id}>
                 <ProductCard product={product} />
-                {isAdmin && (
-                  <DeleteButton id={product.id} buttonContent="Delete" />
-                )}
+                <div className={styles.cardButtons}>
+                  {isAdmin && (
+                    <DeleteButton id={product.id} buttonContent="Delete" />
+                  )}
+                  {
+                    <AddToCartButton
+                      id={product.id}
+                      buttonContent="Add to cart"
+                    />
+                  }
+                </div>
               </div>
             ))}
           </div>
@@ -73,9 +79,9 @@ const Home: NextPage<Props> = ({ data }: Props) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const products = await handleGetUnsoldProducts();
-  return { props: { data: products } };
-};
+// export const getServerSideProps: GetServerSideProps = async () => {
+//   const products = await handleGetUnsoldProducts();
+//   return { props: { data: products } };
+// };
 
 export default Home;

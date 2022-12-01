@@ -17,15 +17,15 @@ export default async function allProductHandler(
 ) {
   switch (req.method) {
     case 'GET':
-      // handleGetUnsoldProducts()
-      //   .then((products) => {
-      //     if (!products) {
-      //       res.status(500).json({ error: 'failed to get products from db' });
-      //       return;
-      //     }
-      //     res.status(200).json({ products: products });
-      //   })
-      //   .catch((e) => console.log(e));
+      handleGetUnsoldProducts()
+        .then((products) => {
+          if (!products) {
+            res.status(500).json({ error: 'failed to get products from db' });
+            return;
+          }
+          res.status(200).json({ products: products });
+        })
+        .catch((e) => console.log(e));
       break;
     case 'POST':
       let postProduct = {

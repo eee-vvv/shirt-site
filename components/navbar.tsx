@@ -1,12 +1,15 @@
 import Link from 'next/link';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useState } from 'react';
+import { CartContext } from '../lib/context';
 import styles from '../styles/Navbar.module.css';
 
 import Cart from './Cart';
 
 const Navbar = () => {
   const [showCart, setShowCart] = useState(false);
+  const [cartContext, setCartContext] = useContext(CartContext);
+  const cartLength = cartContext.length;
 
   const handleToggleCart = () => {
     setShowCart((prev) => !prev);
@@ -23,10 +26,10 @@ const Navbar = () => {
         </Link>
       </nav>
       {showCart ? (
-        <Cart />
+        <Cart toggle={handleToggleCart} />
       ) : (
         <div className={styles.cartThumbnail} onClick={handleToggleCart}>
-          Cart
+          Cart ({cartLength})
         </div>
       )}
     </div>

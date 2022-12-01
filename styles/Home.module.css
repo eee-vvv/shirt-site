@@ -6,3 +6,11 @@
   justify-content: space-evenly;
   align-items: stretch;
 }
+
+.cardContainer {
+  margin: 20px;
+}
+
+.cardButtons {
+  margin-top: 8px;
+}

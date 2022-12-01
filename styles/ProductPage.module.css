@@ -1,0 +1,45 @@
+.container {
+  max-width: 400px;
+}
+.informationContainer {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.price {
+  margin-bottom: 10px;
+}
+
+.description {
+  margin-bottom: 5px;
+}
+
+.measurements {
+
+}
+
+.addToCartButton {
+
+}
+
+@media screen and (min-width: 900px) {
+  .container {
+    display: flex;
+    max-width: 900px;
+  }
+
+  .imageContainer {
+    max-width: 400px;
+  }
+
+  .informationContainer {
+    max-width: 400px;
+    margin-left: 25px;
+  }
+}

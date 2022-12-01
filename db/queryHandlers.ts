@@ -14,7 +14,7 @@ async function clientConnect(): Promise<Client|Error>{
   }
 }
 
-export async function handleGetUnsoldProducts(): Promise<any[]|null> {
+export async function handleGetUnsoldProducts(): Promise<Product[]|null> {
   try {
     const client = await clientConnect()
     if (client instanceof Error){

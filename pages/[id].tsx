@@ -5,11 +5,15 @@ import { useRouter } from 'next/router';
 import { allProducts } from '../lib/db';
 import { handleGetProduct } from '../db/queryHandlers';
 import type { Product } from '../interfaces/index';
+import styles from '../styles/ProductPage.module.css';
+
+import productPic from '../public/fakeshirts/1.jpg';
+import Image from 'next/image';
 
 type Props = {
   data: Product | null;
 };
-
+// TODO: refactor to pull products from context instead of db
 const ProductPage: NextPage<Props> = ({ data }: Props) => {
   const product = data;
 
@@ -50,19 +54,24 @@ type ProductInfoProps = {
   product: Product;
 };
 
+// TODO: carousel for multiple images
+
 function ProductInfo({ product }: ProductInfoProps) {
   return (
     <div className="page-container">
       <h2>{product.name}</h2>
-      <div>image: {product.imagesId}</div>
-      <div>
-        <ul>
-          <li>
-            <span>{product.price}</span>
-            <span>{product.measurements}</span>
-          </li>
-          <li>{product.description}</li>
-        </ul>
+      <div className={styles.container}>
+        <div className={styles.imageContainer}>
+          <Image src={productPic} alt="todo" />
+          <div className={styles.buttonGroup}>
+            <div className={styles.price}>${product.price}</div>
+            <button className={styles.addToCartButton}>Add to Cart</button>
+          </div>
+        </div>
+        <div className={styles.informationContainer}>
+          <div className={styles.description}>{product.description}</div>
+          <div className={styles.measurements}>{product.measurements}</div>
+        </div>
       </div>
     </div>
   );

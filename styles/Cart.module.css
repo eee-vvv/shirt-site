@@ -1,0 +1,30 @@
+.container {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  border: 2px solid black;
+  padding: 12px;
+  margin: 5px;
+  background-color: aquamarine;
+  z-index: 5;
+}
+
+.header {
+  font-size: larger;
+  font-weight: 500;
+}
+
+.shirtList {
+  border: 1px solid black;
+  padding: 4px;
+  /* display: flex; */
+  /* grid-template-columns: 30px 30px 30px 30px; */
+}
+
+.row {
+  display: flex; /* TODO: this shouldn't be flex in the end */
+}
+
+.row > * {
+  padding: 3px;
+}
