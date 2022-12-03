@@ -21,7 +21,7 @@ const Home: NextPage = () => {
   const products = useContext(ProductsContext);
   const [cartProducts, setCartProducts] = useContext(CartContext);
   //console.log(cartProducts)
-  const isAdmin = false;
+  const isAdmin = true;
   const [showProductForm, setShowProductForm] = useState(false);
 
   const handleProductFormToggle = () => {
