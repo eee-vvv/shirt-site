@@ -1,12 +1,11 @@
 import { Client, QueryResult } from 'pg'
-import { clientSecrets } from './dbSecrets'
 import type { Product, NewProduct } from '../interfaces';
 import { useRouter } from 'next/router'
 
 
 async function clientConnect(): Promise<Client|Error>{
   try {
-    const client = new Client(clientSecrets());
+    const client = new Client();
     await client.connect();
     return client
   } catch (e: any){

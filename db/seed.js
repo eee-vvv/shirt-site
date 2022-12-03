@@ -29,14 +29,7 @@ const randProduct = () => {
 
 async function seed(numProducts) {
     try {
-        console.log("DB: ", process.env)
-
-        const client = new Client({
-            user: process.env.PG_USER,
-            host: process.env.PG_HOST,
-            database: process.env.PG_DB,
-            port: process.env.PG_PORT,
-        });
+        const client = new Client();
 
         await client.connect();
 
