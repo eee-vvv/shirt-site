@@ -1,8 +1,5 @@
 const { Client } = require('pg')
-const { clientSecrets } = require('./dbSecrets.js')
-
-// const { Client } = pg;
-// const clientSecrets = dbSecrets
+require('dotenv').config()
 
 const choose = (arr) => {
     return arr[Math.floor(Math.random() * (arr.length))];
@@ -32,8 +29,14 @@ const randProduct = () => {
 
 async function seed(numProducts) {
     try {
+        console.log("DB: ", process.env)
 
-        const client = new Client(clientSecrets());
+        const client = new Client({
+            user: process.env.PG_USER,
+            host: process.env.PG_HOST,
+            database: process.env.PG_DB,
+            port: process.env.PG_PORT,
+        });
 
         await client.connect();
 
