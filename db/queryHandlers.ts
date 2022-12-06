@@ -19,7 +19,7 @@ export async function handleGetUnsoldProducts(): Promise<Product[] | null> {
       throw client;
     }
     const products = await client.query(`
-        SELECT *
+        SELECT id, name, price, measurements, description, sold, imagesId
         FROM product
         WHERE sold = false;`);
     return products.rows;
@@ -37,7 +37,7 @@ export async function handleGetProduct(id: number): Promise<Product | null> {
     }
     const res = await client.query(
       `
-      SELECT *
+      SELECT id, name, price, measurements, description, sold, imagesId
       FROM product
       WHERE id = $1;`,
       [id]
