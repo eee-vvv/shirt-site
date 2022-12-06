@@ -16,6 +16,7 @@ import type { Product } from '../interfaces';
 import { allProducts } from '../lib/db';
 import DeleteButton from '../components/DeleteButton';
 import { CartContext, ProductsContext } from '../lib/context';
+import { listBuckets } from '../lib/supabase'
 
 const Home: NextPage = () => {
   const products = useContext(ProductsContext);
@@ -27,6 +28,7 @@ const Home: NextPage = () => {
   const handleProductFormToggle = () => {
     setShowProductForm((prev) => !prev);
   };
+
 
   return (
     <div>
