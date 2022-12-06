@@ -8,10 +8,10 @@ import {
 } from '../lib/context';
 import { useState, useEffect } from 'react';
 import { StorageClient } from '@supabase/storage-js';
-import type { Product } from '../interfaces'
+import type { Product } from '../interfaces';
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const initialState: Product[] = [];
+  const initialState: number[] = [];
   const [cartProducts, setCartProducts] = useState(initialState);
 
   const STORAGE_URL = `${process.env.SUPABASE_URL}/storage/v1`;
