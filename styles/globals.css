@@ -36,6 +36,16 @@ a {
   text-decoration: none;
 }
 
+.external-link {
+  color: #00ff26;
+  background-color: #909092;
+}
+
+.external-link:hover {
+  color: #00ff26;
+  background-color: #5a5a5b;
+}
+
 * {
   box-sizing: border-box;
 }
