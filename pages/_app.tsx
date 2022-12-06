@@ -8,15 +8,11 @@ import {
 } from '../lib/context';
 import { useState, useEffect } from 'react';
 import { StorageClient } from '@supabase/storage-js';
-
-function getInitialCartState(): number[] {
-  const cartProducts =
-    typeof window !== 'undefined' ? localStorage.getItem('cartProducts') : null;
-  return cartProducts ? JSON.parse(cartProducts) : [];
-}
+import type { Product } from '../interfaces'
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [cartProducts, setCartProducts] = useState(getInitialCartState());
+  const initialState: Product[] = [];
+  const [cartProducts, setCartProducts] = useState(initialState);
 
   const STORAGE_URL = `${process.env.SUPABASE_URL}/storage/v1`;
   let SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
@@ -31,8 +27,14 @@ function MyApp({ Component, pageProps }: AppProps) {
   });
 
   useEffect(() => {
-    console.log('cart context:', cartProducts);
-    localStorage.setItem('cartProducts', JSON.stringify(cartProducts));
+    const localCartProducts = localStorage.getItem('cartProducts');
+    setCartProducts(localCartProducts ? JSON.parse(localCartProducts) : []);
+  }, []);
+
+  useEffect(() => {
+    if (cartProducts !== initialState) {
+      localStorage.setItem('cartProducts', JSON.stringify(cartProducts));
+    }
   }, [cartProducts]);
 
   return (
