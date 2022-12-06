@@ -38,13 +38,21 @@ a {
 }
 
 .external-link {
-  color: #00ff26;
-  background-color: #909092;
+  border-bottom: 2px solid #d64086;
 }
 
 .external-link:hover {
-  color: #00ff26;
-  background-color: #5a5a5b;
+  color: #353535;
+}
+
+.external-link-footer {
+  background-color: white;
+  border-bottom: 2px solid #d64086;
+}
+
+.external-link-footer:hover {
+  background-color: #d64086;
+  color: #353535;
 }
 
 * {
@@ -62,4 +70,5 @@ a {
   bottom: 0;
   width: 100%;
   height: 2.5rem;
+  padding: 5px;
 }

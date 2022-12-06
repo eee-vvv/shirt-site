@@ -13,7 +13,6 @@ import styles from '../styles/info.module.css';
 const Info: NextPage = () => {
   return (
     <div className="page-container">
-      <h2 className={styles.heading}>About Us</h2>
       <p className={styles.paragraph}>
         Mary Cave shirts are hand-printed in Philadelphia, PA. If you are
         located in Philadelphia and would like to organize a local

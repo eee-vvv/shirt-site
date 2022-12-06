@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <div className="footer">
       <a
-        className="external-link"
+        className="external-link-footer"
         target="_blank"
         href="https://tinyletter.com/marycave"
         rel="noreferrer"
