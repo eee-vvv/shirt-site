@@ -2,8 +2,9 @@ import Link from 'next/link';
 
 const Footer = () => {
   return (
-    <div>
+    <div className="footer">
       <a
+        className="external-link-footer"
         target="_blank"
         href="https://tinyletter.com/marycave"
         rel="noreferrer"

@@ -1,60 +1,59 @@
-import { Client, QueryResult } from 'pg'
+import { Client, QueryResult } from 'pg';
 import type { Product, NewProduct } from '../interfaces';
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
 
-
-async function clientConnect(): Promise<Client|Error>{
+async function clientConnect(): Promise<Client | Error> {
   try {
     const client = new Client();
     await client.connect();
-    return client
-  } catch (e: any){
-    return e
+    return client;
+  } catch (e: any) {
+    return e;
   }
 }
 
-export async function handleGetUnsoldProducts(): Promise<Product[]|null> {
+export async function handleGetUnsoldProducts(): Promise<Product[] | null> {
   try {
-    const client = await clientConnect()
-    if (client instanceof Error){
-      throw client
+    const client = await clientConnect();
+    if (client instanceof Error) {
+      throw client;
     }
     const products = await client.query(`
-        SELECT *
+        SELECT id, name, price, description, measurements, sold, imagesId
         FROM product
         WHERE sold = false;`);
     return products.rows;
   } catch (e) {
     console.log(e);
-    return null
+    return null;
   }
 }
 
-export async function handleGetProduct(id: number): Promise<Product|null> {
+export async function handleGetProduct(id: number): Promise<Product | null> {
   try {
-    const client = await clientConnect()
-    if (client instanceof Error){
-      throw client
+    const client = await clientConnect();
+    if (client instanceof Error) {
+      throw client;
     }
     const res = await client.query(
       `
-      SELECT *
+      SELECT id, name, price, description, measurements, sold, imagesId
       FROM product
       WHERE id = $1;`,
       [id]
     );
-    return res.rows[0]
+    return res.rows[0];
   } catch (e) {
     console.error('error in /api/product/[id] handleGet method: ', e);
-    return null
+    return null;
   }
 }
 
-export async function handleDeleteProduct(id: number): Promise<number|null>{
+export async function handleDeleteProduct(id: number): Promise<number | null> {
   try {
-    const client = await clientConnect()
-    if (client instanceof Error){
-      throw client
+    const client = await clientConnect();
+    if (client instanceof Error) {
+      throw client;
     }
     const res = await client.query(
       `
@@ -62,22 +61,31 @@ export async function handleDeleteProduct(id: number): Promise<number|null>{
       WHERE id = $1;`,
       [id]
     );
-    return res.rowCount
+    return res.rowCount;
   } catch (e) {
     console.error('error in /api/product/[id] handlePost method: ', e);
-    return null
+    return null;
   }
 }
 
-export async function handlePostProduct(p: NewProduct): Promise<Product|null> {
+export async function handlePostProduct(
+  p: NewProduct
+): Promise<Product | null> {
   try {
-    const client = await clientConnect()
-    if (client instanceof Error){
-      throw client
+    const client = await clientConnect();
+    if (client instanceof Error) {
+      throw client;
     }
-    let values = [p.name, p.price, p.measurements, p.description, p.sold, p.imagesId]
+    let values = [
+      p.name,
+      p.price,
+      p.measurements,
+      p.description,
+      p.sold,
+      p.imagesId,
+    ];
     const res = await client.query(
-        `INSERT INTO product (
+      `INSERT INTO product (
         name,
         price,
         measurements,
@@ -88,23 +96,32 @@ export async function handlePostProduct(p: NewProduct): Promise<Product|null> {
         VALUES ($1, $2, $3, $4, $5, $6)
         RETURNING *
         ;`,
-        values);
-      return res.rows[0]
-    } catch (e) {
-      console.error('error in /api/product/id handlePost method: ', e);
-      return null
+      values
+    );
+    return res.rows[0];
+  } catch (e) {
+    console.error('error in /api/product/id handlePost method: ', e);
+    return null;
   }
 }
 
-export async function handleEditProduct(p:Product): Promise<Product|null> {
+export async function handleEditProduct(p: Product): Promise<Product | null> {
   try {
-    const client = await clientConnect()
-    if (client instanceof Error){
-      throw client
+    const client = await clientConnect();
+    if (client instanceof Error) {
+      throw client;
     }
-  let values = [p.id, p.name, p.price, p.measurements, p.description, p.sold, p.imagesId]
-  const res = await client.query(
-    `UPDATE product
+    let values = [
+      p.id,
+      p.name,
+      p.price,
+      p.measurements,
+      p.description,
+      p.sold,
+      p.imagesId,
+    ];
+    const res = await client.query(
+      `UPDATE product
     SET
     name = $2,
     price = $3,
@@ -115,10 +132,11 @@ export async function handleEditProduct(p:Product): Promise<Product|null> {
     WHERE id = $1
     RETURNING *
     ;`,
-    values);
-    return res.rows[0]
+      values
+    );
+    return res.rows[0];
   } catch (e) {
     console.error('error in /api/product/id handleEdit method: ', e);
-    return null
+    return null;
   }
 }
