@@ -30,7 +30,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <Auth0Provider
       domain={'dev-q3oslrvzaqqu40xb.us.auth0.com'}
       clientId={'2OFZQbMbk8IfppliTNNxTq79IxlIIVKn'}
-      redirectUri={'https://google.com/'}
+      redirectUri={'http://localhost:3000/'}
     >
       <ProductsContextProvider>
         <CartContext.Provider value={[cartProducts, setCartProducts]}>
