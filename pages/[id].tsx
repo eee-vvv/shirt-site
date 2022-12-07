@@ -9,12 +9,15 @@ import styles from '../styles/ProductPage.module.css';
 
 import productPic from '../public/fakeshirts/1.jpg';
 import Image from 'next/image';
+import { useAuth0 } from '@auth0/auth0-react'
 
 type Props = {
   data: Product | null;
 };
 // TODO: refactor to pull products from context instead of db
 const ProductPage: NextPage<Props> = ({ data }: Props) => {
+  const { user, isAuthenticated, isLoading, getAccessTokenSilently } =
+    useAuth0();
   const product = data;
 
   const [showEdit, setShowEdit] = useState(false);
@@ -25,7 +28,9 @@ const ProductPage: NextPage<Props> = ({ data }: Props) => {
 
   return (
     <div>
+{isAuthenticated &&
       <ToggleEditButton showEdit={showEdit} setShowEdit={setShowEdit} />
+ }
       {showEdit ? (
         <EditProductForm product={product} setShowEdit={setShowEdit} />
       ) : (

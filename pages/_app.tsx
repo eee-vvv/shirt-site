@@ -6,25 +6,14 @@ import {
   CartContext,
   StorageContext,
 } from '../lib/context';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { StorageClient } from '@supabase/storage-js';
 import type { Product } from '../interfaces';
+import { Auth0Provider } from '@auth0/auth0-react';
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const initialState: number[] = [];
+  const initialState: number[] = useMemo(() => [], []);
   const [cartProducts, setCartProducts] = useState(initialState);
-
-  const STORAGE_URL = `${process.env.SUPABASE_URL}/storage/v1`;
-  let SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
-
-  if (!SERVICE_KEY) {
-    SERVICE_KEY = 'nokey';
-  }
-
-  const storageClient = new StorageClient(STORAGE_URL, {
-    apikey: SERVICE_KEY,
-    Authorization: `Bearer ${SERVICE_KEY}`,
-  });
 
   useEffect(() => {
     const localCartProducts = localStorage.getItem('cartProducts');
@@ -35,16 +24,22 @@ function MyApp({ Component, pageProps }: AppProps) {
     if (cartProducts !== initialState) {
       localStorage.setItem('cartProducts', JSON.stringify(cartProducts));
     }
-  }, [cartProducts]);
+  }, [cartProducts, initialState]);
 
   return (
-    <ProductsContextProvider>
-      <CartContext.Provider value={[cartProducts, setCartProducts]}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </CartContext.Provider>
-    </ProductsContextProvider>
+    <Auth0Provider
+      domain={'dev-q3oslrvzaqqu40xb.us.auth0.com'}
+      clientId={'2OFZQbMbk8IfppliTNNxTq79IxlIIVKn'}
+      redirectUri={'https://google.com/'}
+    >
+      <ProductsContextProvider>
+        <CartContext.Provider value={[cartProducts, setCartProducts]}>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </CartContext.Provider>
+      </ProductsContextProvider>
+    </Auth0Provider>
   );
 }
 
