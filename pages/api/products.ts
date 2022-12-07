@@ -48,8 +48,6 @@ export default async function allProductHandler(
       const stripeProduct = await createProduct(
         postProduct.name,
         postProduct.price * 100,
-        postProduct.description,
-        postProduct.measurements
       );
 
       if (!stripeProduct) {
