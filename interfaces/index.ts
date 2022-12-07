@@ -21,7 +21,7 @@ export type NewProduct = {
   sold: boolean;
   imagesId: string;
   stripePriceId?: string;
-}
+};
 
 // 3) Products when all fields are strings
 export type JSONProduct = {
@@ -30,24 +30,22 @@ export type JSONProduct = {
   measurements: string;
   description: string;
   imagesId: string;
-}
-
-
+};
 
 export const isProduct = (thing: any) => {
   if (
     thing.name &&
-    typeof thing.name === "string" &&
+    typeof thing.name === 'string' &&
     thing.price !== null &&
-    typeof thing.price === "number" &&
+    typeof thing.price === 'number' &&
     thing.measurements &&
-    typeof thing.measurements === "string" &&
+    typeof thing.measurements === 'string' &&
     thing.description &&
-    typeof thing.description === "string" &&
+    typeof thing.description === 'string' &&
     thing.sold !== null &&
-    typeof thing.sold === "boolean" &&
+    typeof thing.sold === 'boolean' &&
     thing.imagesId &&
-    typeof thing.imagesId === "string"
+    typeof thing.imagesId === 'string'
   ) {
     return true;
   }
@@ -63,10 +61,9 @@ export const isProductJSON = (thing: any) => {
     thing.sold !== null &&
     thing.imagesId &&
     !isNaN(parseInt(thing.price)) &&
-    (thing.sold === 'true' ||
-    thing.sold === 'false')
+    (thing.sold === 'true' || thing.sold === 'false')
   ) {
-  return true
+    return true;
   }
-  return false
-}
+  return false;
+};

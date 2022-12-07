@@ -36,7 +36,7 @@ export default async function allProductHandler(
         description: req.body.description,
         sold: req.body.sold,
         imagesId: req.body.imagesId,
-        stripePriceId: ''
+        stripePriceId: '',
       };
       if (!isProduct(req.body)) {
         console.log(req.body);
