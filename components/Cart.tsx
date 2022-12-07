@@ -3,6 +3,7 @@ import { Product } from '../interfaces';
 import { CartContext, ProductsContext } from '../lib/context';
 import styles from '../styles/Cart.module.css';
 import RemoveFromCartButton from './RemoveFromCartButton';
+import CheckoutButton from './CheckoutButton';
 
 import productPic from '../public/fakeshirts/1.jpg';
 import Image from 'next/image';
@@ -32,10 +33,6 @@ const Cart = ({ toggle }: Props) => {
 
   const notEmpty = cartContext.length > 0;
 
-  const handleCheckOut = () => {
-    console.log('checking out!');
-  };
-
   return (
     <div className={styles.container}>
       {notEmpty ? (
@@ -57,7 +54,7 @@ const Cart = ({ toggle }: Props) => {
         <div>Cart is empty..add something!</div>
       )}
       <button onClick={toggle}>Close</button>
-      {notEmpty && <button onClick={handleCheckOut}>Check Out</button>}
+      {notEmpty && <CheckoutButton />}
     </div>
   );
 };
