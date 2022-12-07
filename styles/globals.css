@@ -9,6 +9,7 @@ body {
 }
 
 button {
+  color: black;
   background-color: #00ff26;
   border: 1px solid black;
   font-family: inherit;
@@ -17,7 +18,6 @@ button {
   margin: 1px;
   overflow: visible;
   text-transform: none;
-  -webkit-appearance: button;
 }
 
 button:hover {
@@ -71,4 +71,5 @@ a {
   width: 100%;
   height: 2.5rem;
   padding: 5px;
+  padding-left: 20px;
 }

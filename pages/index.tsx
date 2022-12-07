@@ -17,11 +17,14 @@ import { allProducts } from '../lib/db';
 import DeleteButton from '../components/DeleteButton';
 import { CartContext, ProductsContext } from '../lib/context';
 
+import { useAuth0 } from '@auth0/auth0-react';
+
 const Home: NextPage = () => {
+  const { user, isAuthenticated, isLoading, getAccessTokenSilently } =
+    useAuth0();
   const products = useContext(ProductsContext);
   const [cartProducts, setCartProducts] = useContext(CartContext);
   //console.log(cartProducts)
-  const isAdmin = true;
   const [showProductForm, setShowProductForm] = useState(false);
 
   const handleProductFormToggle = () => {
@@ -41,7 +44,7 @@ const Home: NextPage = () => {
           {
             // if user is admin, render add product button or
             // new product form depending on toggle status
-            isAdmin &&
+            isAuthenticated &&
               (showProductForm ? (
                 <div>
                   <AddProductForm />
@@ -58,7 +61,7 @@ const Home: NextPage = () => {
               <div className={styles.cardContainer} key={product.id}>
                 <ProductCard product={product} />
                 <div className={styles.cardButtons}>
-                  {isAdmin && (
+                  {isAuthenticated && (
                     <DeleteButton id={product.id} buttonContent="Delete" />
                   )}
                   {

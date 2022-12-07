@@ -1,32 +1,46 @@
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
-import Layout from '../components/layout'
-import { ProductsContextProvider, CartContext } from '../lib/context'
-import { useState, useEffect } from 'react'
-
-function getInitialCartState(): number[] {
-  const cartProducts = typeof window !== 'undefined'? localStorage.getItem('cartProducts'): null
-  return cartProducts ? JSON.parse(cartProducts) : []
-}
-
+import '../styles/globals.css';
+import type { AppProps } from 'next/app';
+import Layout from '../components/layout';
+import {
+  ProductsContextProvider,
+  CartContext,
+  StorageContext,
+} from '../lib/context';
+import { useState, useEffect, useMemo } from 'react';
+import { StorageClient } from '@supabase/storage-js';
+import type { Product } from '../interfaces';
+import { Auth0Provider } from '@auth0/auth0-react';
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [cartProducts, setCartProducts] = useState(getInitialCartState())
+  const initialState: number[] = useMemo(() => [], []);
+  const [cartProducts, setCartProducts] = useState(initialState);
 
   useEffect(() => {
-    console.log('cart context:', cartProducts)
-    localStorage.setItem('cartProducts', JSON.stringify(cartProducts))
-  }, [cartProducts])
+    const localCartProducts = localStorage.getItem('cartProducts');
+    setCartProducts(localCartProducts ? JSON.parse(localCartProducts) : []);
+  }, []);
+
+  useEffect(() => {
+    if (cartProducts !== initialState) {
+      localStorage.setItem('cartProducts', JSON.stringify(cartProducts));
+    }
+  }, [cartProducts, initialState]);
 
   return (
-  <ProductsContextProvider>
-    <CartContext.Provider value={[cartProducts, setCartProducts]}>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </CartContext.Provider>
-  </ProductsContextProvider>
-  )
+    <Auth0Provider
+      domain={'dev-q3oslrvzaqqu40xb.us.auth0.com'}
+      clientId={'2OFZQbMbk8IfppliTNNxTq79IxlIIVKn'}
+      redirectUri={'http://localhost:3000/'}
+    >
+      <ProductsContextProvider>
+        <CartContext.Provider value={[cartProducts, setCartProducts]}>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </CartContext.Provider>
+      </ProductsContextProvider>
+    </Auth0Provider>
+  );
 }
 
-export default MyApp
+export default MyApp;
