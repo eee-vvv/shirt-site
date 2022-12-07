@@ -84,6 +84,7 @@ export async function handlePostProduct(
       p.sold,
       p.imagesId,
       p.stripePriceId === '' ? null : p.stripePriceId,
+      p.stripeProductId === '' ? null : p.stripeProductId,
     ];
     const res = await client.query(
       `INSERT INTO product (
@@ -93,9 +94,10 @@ export async function handlePostProduct(
         description,
         sold,
         imagesId,
-        stripePriceId
+        stripePriceId,
+        stripeProductId
         )
-        VALUES ($1, $2, $3, $4, $5, $6, $7)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
         RETURNING *
         ;`,
       values

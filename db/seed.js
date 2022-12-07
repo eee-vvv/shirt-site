@@ -72,7 +72,8 @@ async function seed(numProducts) {
             description text,
             sold boolean,
             imagesId varchar(5004),
-            stripepriceid text
+            stripepriceid text,
+            stripeproductid text
             );`);
 
     for (let num = 0; num < numProducts; num++) {

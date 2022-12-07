@@ -10,6 +10,7 @@ export type Product = {
   sold: boolean;
   imagesId: string;
   stripePriceId?: string;
+  stripeProductId?: string;
 };
 
 // 2) Products before they're put into the database
@@ -21,6 +22,7 @@ export type NewProduct = {
   sold: boolean;
   imagesId: string;
   stripePriceId?: string;
+  stripeProductId?: string;
 };
 
 // 3) Products when all fields are strings

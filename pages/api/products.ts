@@ -37,6 +37,7 @@ export default async function allProductHandler(
         sold: req.body.sold,
         imagesId: req.body.imagesId,
         stripePriceId: '',
+        stripeProductId: '',
       };
       if (!isProduct(req.body)) {
         console.log(req.body);
@@ -47,7 +48,7 @@ export default async function allProductHandler(
 
       const stripeProduct = await createProduct(
         postProduct.name,
-        postProduct.price * 100,
+        postProduct.price * 100
       );
 
       if (!stripeProduct) {
@@ -55,6 +56,7 @@ export default async function allProductHandler(
       }
 
       postProduct.stripePriceId = stripeProduct.default_price.id;
+      postProduct.stripeProductId = stripeProduct.id;
       const product = await handlePostProduct(postProduct);
 
       if (!product) {
