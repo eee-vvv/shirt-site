@@ -9,6 +9,7 @@ export type Product = {
   description: string;
   sold: boolean;
   imagesId: string;
+  stripePriceId?: string;
 };
 
 // 2) Products before they're put into the database
@@ -19,6 +20,7 @@ export type NewProduct = {
   description: string;
   sold: boolean;
   imagesId: string;
+  stripePriceId?: string;
 }
 
 // 3) Products when all fields are strings
@@ -61,7 +63,7 @@ export const isProductJSON = (thing: any) => {
     thing.sold !== null &&
     thing.imagesId &&
     !isNaN(parseInt(thing.price)) &&
-    (thing.sold === 'true' || 
+    (thing.sold === 'true' ||
     thing.sold === 'false')
   ) {
   return true

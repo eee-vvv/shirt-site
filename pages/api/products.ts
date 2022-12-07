@@ -5,6 +5,7 @@ import {
 } from '../../db/queryHandlers';
 
 import { Product, isProduct, isProductJSON } from '../../interfaces';
+import { createProduct } from '../../lib/stripe';
 
 type Data = {
   products?: Array<Product>;
@@ -35,20 +36,35 @@ export default async function allProductHandler(
         description: req.body.description,
         sold: req.body.sold,
         imagesId: req.body.imagesId,
+        stripePriceId: ''
       };
-      if (!isProduct(req.body)){  
-        console.log(req.body)
+      if (!isProduct(req.body)) {
+        console.log(req.body);
         console.log('JSON not a product');
         res.status(400).json({ error: 'JSON sent to db not a product' });
         break;
       }
-      const product = await handlePostProduct(postProduct)
+
+      const stripeProduct = await createProduct(
+        postProduct.name,
+        postProduct.price * 100,
+        postProduct.description,
+        postProduct.measurements
+      );
+
+      if (!stripeProduct) {
+        throw 'Stripe product creation failed. please try again.';
+      }
+
+      postProduct.stripePriceId = stripeProduct.default_price.id;
+      const product = await handlePostProduct(postProduct);
+
       if (!product) {
-        console.log('error 500')
+        console.log('error 500');
         res.status(500).json({ error: 'product not found' });
         return;
       }
-      console.log('from db:', product)
+      console.log('from db:', product);
       res.status(200).json({ products: [product] });
       break;
     default:

@@ -44,7 +44,8 @@ async function seed(numProducts) {
             measurements text,
             description text,
             sold boolean,
-            imagesId varchar(5004)
+            imagesId varchar(5004),
+            stripepriceid text
             );`);
 
         for (let num = 0; num < numProducts; num ++){
