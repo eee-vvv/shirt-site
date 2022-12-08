@@ -24,12 +24,20 @@ const CheckoutButton = ({ priceIds }: Props) => {
     }
   }, []);
 
-  console.log("price ids: ", priceIds)
+  console.log('price ids: ', priceIds);
 
-  const handleCheckout = async () => {};
+  const handleCheckout = async () => {
+    const response = await fetch('/api/checkout_sessions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ ids: priceIds }),
+    });
+  };
 
   return (
-    <button type="submit" role="link">
+    <button onClick={handleCheckout}>
       Checkout
     </button>
   );
