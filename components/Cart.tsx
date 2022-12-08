@@ -24,7 +24,7 @@ type CartShirtProps = {
 const Cart = ({ toggle }: Props) => {
   const [cartContext, setCartContext] = useContext(CartContext);
   const productsContext = useContext(ProductsContext);
-  const [priceIds, setPriceIds] = useState<string[]>([]);
+  const [priceIds, setPriceIds] = useState<(string | undefined)[]>([]);
   const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
@@ -33,16 +33,21 @@ const Cart = ({ toggle }: Props) => {
         (product) => product.id === currentId
       );
       if (!product) return sum;
-      console.log('product in effect hook: ', product);
-      const tmpIds = [...priceIds];
-      if (product.stripepriceid) {
-        tmpIds.push(product.stripepriceid);
-      }
-      setPriceIds(tmpIds);
       return sum + product.price;
     }, 0);
 
     setTotalPrice(tempTotal);
+  }, [cartContext]);
+
+  useEffect(() => {
+    const ids: (string | undefined)[] = cartContext.map((cartId) => {
+      const product = productsContext.find((product) => product.id === cartId);
+      if (product && product.stripepriceid) {
+        return product.stripepriceid;
+      }
+    }, []);
+
+    setPriceIds(ids);
   }, [cartContext]);
 
   const notEmpty = cartContext.length > 0;

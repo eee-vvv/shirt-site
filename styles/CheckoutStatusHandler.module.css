@@ -1,0 +1,19 @@
+.successContainer {
+  border: 5px solid rgb(0, 255, 0);
+  padding: 30px;
+  margin: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.canceledContainer {
+  border: 5px solid red;
+  padding: 30px;
+  margin: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.text {
+  font-weight: bold;
+}

@@ -3,7 +3,7 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     try {
-      console.log('body: ', req.body)
+      console.log('body: ', req.body);
       // Create Checkout Sessions from body params.
       if (!req.body.ids) {
         res.status(400).json('No IDs in REQ body');
@@ -14,6 +14,8 @@ export default async function handler(req, res) {
         quantity: 1,
       }));
 
+      console.log('lineItems', lineItems);
+
       const session = await stripe.checkout.sessions.create({
         line_items: lineItems,
         mode: 'payment',
@@ -22,8 +24,9 @@ export default async function handler(req, res) {
         automatic_tax: { enabled: true },
       });
 
-      res.redirect(303, session.url);
+      res.json({ id: session.id });
     } catch (err) {
+      console.error('error: ', err.message);
       res.status(err.statusCode || 500).json(err.message);
     }
   } else {

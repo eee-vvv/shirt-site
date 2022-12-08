@@ -6,7 +6,7 @@ const publishableKey =
 const stripePromise = loadStripe(publishableKey);
 
 type Props = {
-  priceIds: String[];
+  priceIds: (string | undefined)[];
 };
 
 const CheckoutButton = ({ priceIds }: Props) => {
@@ -27,6 +27,7 @@ const CheckoutButton = ({ priceIds }: Props) => {
   console.log('price ids: ', priceIds);
 
   const handleCheckout = async () => {
+    const stripe = await stripePromise;
     const response = await fetch('/api/checkout_sessions', {
       method: 'POST',
       headers: {
@@ -34,13 +35,22 @@ const CheckoutButton = ({ priceIds }: Props) => {
       },
       body: JSON.stringify({ ids: priceIds }),
     });
+    response.json().then((data) => {
+      const id = data.id;
+      stripe
+        ?.redirectToCheckout({
+          sessionId: id,
+        })
+        .then((result) => {
+          console.log('result: ', result);
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+    });
   };
 
-  return (
-    <button onClick={handleCheckout}>
-      Checkout
-    </button>
-  );
+  return <button onClick={handleCheckout}>Checkout</button>;
 };
 
 export default CheckoutButton;
