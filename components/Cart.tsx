@@ -1,4 +1,4 @@
-import { MouseEventHandler, useContext } from 'react';
+import { MouseEventHandler, useContext, useEffect, useState } from 'react';
 import { Product } from '../interfaces';
 import { CartContext, ProductsContext } from '../lib/context';
 import styles from '../styles/Cart.module.css';
@@ -24,12 +24,26 @@ type CartShirtProps = {
 const Cart = ({ toggle }: Props) => {
   const [cartContext, setCartContext] = useContext(CartContext);
   const productsContext = useContext(ProductsContext);
+  const [priceIds, setPriceIds] = useState<string[]>([]);
+  const [totalPrice, setTotalPrice] = useState(0);
 
-  const totalPrice = cartContext.reduce((sum, currentId) => {
-    const product = productsContext.find((product) => product.id === currentId);
-    if (!product) return sum;
-    return sum + product.price;
-  }, 0);
+  useEffect(() => {
+    const tempTotal = cartContext.reduce((sum, currentId) => {
+      const product = productsContext.find(
+        (product) => product.id === currentId
+      );
+      if (!product) return sum;
+      console.log('product in effect hook: ', product);
+      const tmpIds = [...priceIds];
+      if (product.stripepriceid) {
+        tmpIds.push(product.stripepriceid);
+      }
+      setPriceIds(tmpIds);
+      return sum + product.price;
+    }, 0);
+
+    setTotalPrice(tempTotal);
+  }, [cartContext]);
 
   const notEmpty = cartContext.length > 0;
 
@@ -54,7 +68,7 @@ const Cart = ({ toggle }: Props) => {
         <div>Cart is empty..add something!</div>
       )}
       <button onClick={toggle}>Close</button>
-      {notEmpty && <CheckoutButton />}
+      {notEmpty && <CheckoutButton priceIds={priceIds} />}
     </div>
   );
 };

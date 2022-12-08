@@ -5,7 +5,11 @@ const publishableKey =
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || 'nokey';
 const stripePromise = loadStripe(publishableKey);
 
-const CheckoutButton = () => {
+type Props = {
+  priceIds: String[];
+};
+
+const CheckoutButton = ({ priceIds }: Props) => {
   useEffect(() => {
     // Check to see if this is a redirect back from Checkout
     const query = new URLSearchParams(window.location.search);
@@ -20,14 +24,14 @@ const CheckoutButton = () => {
     }
   }, []);
 
+  console.log("price ids: ", priceIds)
+
+  const handleCheckout = async () => {};
+
   return (
-    <form action="/api/checkout_sessions" method="POST">
-      <section>
-        <button type="submit" role="link">
-          Checkout
-        </button>
-      </section>
-    </form>
+    <button type="submit" role="link">
+      Checkout
+    </button>
   );
 };
 

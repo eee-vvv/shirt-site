@@ -36,8 +36,8 @@ export default async function allProductHandler(
         description: req.body.description,
         sold: req.body.sold,
         imagesId: req.body.imagesId,
-        stripePriceId: '',
-        stripeProductId: '',
+        stripepriceid: '',
+        stripeproductid: '',
       };
       if (!isProduct(req.body)) {
         console.log(req.body);
@@ -55,8 +55,8 @@ export default async function allProductHandler(
         throw 'Stripe product creation failed. please try again.';
       }
 
-      postProduct.stripePriceId = stripeProduct.default_price.id;
-      postProduct.stripeProductId = stripeProduct.id;
+      postProduct.stripepriceid = stripeProduct.default_price.id;
+      postProduct.stripeproductid = stripeProduct.id;
       const product = await handlePostProduct(postProduct);
 
       if (!product) {

@@ -57,8 +57,8 @@ export default async function singleProductHandler(
 
       const editedProduct = await handleEditProduct({
         ...body,
-        stripeProductId: stripeProduct.productId,
-        stripePriceId: stripeProduct.priceId,
+        stripeproductid: stripeProduct.productId,
+        stripepriceid: stripeProduct.priceId,
       });
 
       if (editedProduct) {
