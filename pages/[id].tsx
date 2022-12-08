@@ -26,6 +26,8 @@ const ProductPage: NextPage<Props> = ({ data }: Props) => {
     return <div>product not found</div>;
   }
 
+  console.log('product: ', product)
+
   return (
     <div>
 {isAuthenticated &&

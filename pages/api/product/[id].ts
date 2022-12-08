@@ -5,10 +5,11 @@ import {
   handleEditProduct,
 } from '../../../db/queryHandlers';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import styles from '../../../styles/ProductPage.module.css'
+import styles from '../../../styles/ProductPage.module.css';
 
 import productPic from '../public/fakeshirts/1.jpg';
 import Image from 'next/image';
+import { editProduct } from '../../../lib/stripe';
 
 export default async function singleProductHandler(
   req: NextApiRequest,
@@ -42,7 +43,24 @@ export default async function singleProductHandler(
       }
       break;
     case 'PUT':
-      const editedProduct = await handleEditProduct(body);
+      const stripeProduct = await editProduct(
+        body.stripeproductid,
+        body.name,
+        body.price * 100,
+        body.stripepriceid
+      );
+
+      if (!stripeProduct) {
+        throw 'Stripe product edit failed. Please try again.';
+      }
+      console.log('stripe product: ', stripeProduct);
+
+      const editedProduct = await handleEditProduct({
+        ...body,
+        stripeProductId: stripeProduct.productId,
+        stripePriceId: stripeProduct.priceId,
+      });
+
       if (editedProduct) {
         res.status(200).json({ message: `product edited` });
       } else {

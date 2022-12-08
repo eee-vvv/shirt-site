@@ -19,7 +19,7 @@ export async function handleGetUnsoldProducts(): Promise<Product[] | null> {
       throw client;
     }
     const products = await client.query(`
-        SELECT id, name, price, measurements, description, sold, imagesId
+        SELECT id, name, price, measurements, description, sold, imagesId, stripePriceId, stripeProductId
         FROM product
         WHERE sold = false;`);
     return products.rows;
@@ -37,7 +37,7 @@ export async function handleGetProduct(id: number): Promise<Product | null> {
     }
     const res = await client.query(
       `
-      SELECT id, name, price, measurements, description, sold, imagesId
+      SELECT id, name, price, measurements, description, sold, imagesId, stripePriceId, stripeProductId
       FROM product
       WHERE id = $1;`,
       [id]
@@ -123,6 +123,8 @@ export async function handleEditProduct(p: Product): Promise<Product | null> {
       p.description,
       p.sold,
       p.imagesId,
+      p.stripeProductId,
+      p.stripePriceId,
     ];
     const res = await client.query(
       `UPDATE product
@@ -132,7 +134,9 @@ export async function handleEditProduct(p: Product): Promise<Product | null> {
     measurements = $4,
     description = $5,
     sold = $6,
-    imagesId = $7
+    imagesId = $7,
+    stripeproductid = $8,
+    stripepriceid = $9
     WHERE id = $1
     RETURNING *
     ;`,
