@@ -19,11 +19,6 @@ function MyApp({ Component, pageProps }: AppProps) {
   const clientId = process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID;
   const redirectUri = process.env.NEXT_PUBLIC_AUTH0_CALLBACK_URL;
 
-  console.log("domain: ", domain)
-  console.log("clientId: ", clientId)
-  console.log("redirectUri: ", redirectUri)
-  console.log("env: ", process.env)
-
   useEffect(() => {
     const localCartProducts = localStorage.getItem('cartProducts');
     setCartProducts(localCartProducts ? JSON.parse(localCartProducts) : []);
@@ -52,6 +47,8 @@ function MyApp({ Component, pageProps }: AppProps) {
       domain={domain}
       clientId={clientId}
       redirectUri={redirectUri}
+      useRefreshTokens
+      cacheLocation="localstorage"
     >
       <ProductsContextProvider>
         <CartContext.Provider value={[cartProducts, setCartProducts]}>
