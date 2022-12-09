@@ -15,6 +15,15 @@ function MyApp({ Component, pageProps }: AppProps) {
   const initialState: number[] = useMemo(() => [], []);
   const [cartProducts, setCartProducts] = useState(initialState);
 
+  const domain = process.env.NEXT_PUBLIC_AUTH0_DOMAIN;
+  const clientId = process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID;
+  const redirectUri = process.env.NEXT_PUBLIC_AUTH0_CALLBACK_URL;
+
+  console.log("domain: ", domain)
+  console.log("clientId: ", clientId)
+  console.log("redirectUri: ", redirectUri)
+  console.log("env: ", process.env)
+
   useEffect(() => {
     const localCartProducts = localStorage.getItem('cartProducts');
     setCartProducts(localCartProducts ? JSON.parse(localCartProducts) : []);
@@ -26,11 +35,23 @@ function MyApp({ Component, pageProps }: AppProps) {
     }
   }, [cartProducts, initialState]);
 
+  if (!domain || !clientId) {
+    return (
+      <ProductsContextProvider>
+        <CartContext.Provider value={[cartProducts, setCartProducts]}>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </CartContext.Provider>
+      </ProductsContextProvider>
+    );
+  }
+
   return (
     <Auth0Provider
-      domain={'dev-q3oslrvzaqqu40xb.us.auth0.com'}
-      clientId={'2OFZQbMbk8IfppliTNNxTq79IxlIIVKn'}
-      redirectUri={'http://localhost:3000/'}
+      domain={domain}
+      clientId={clientId}
+      redirectUri={redirectUri}
     >
       <ProductsContextProvider>
         <CartContext.Provider value={[cartProducts, setCartProducts]}>
