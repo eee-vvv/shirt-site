@@ -31,6 +31,7 @@ const Cart = ({ toggle }: Props) => {
   const [priceIds, setPriceIds] = useState<(string | undefined)[]>([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [soldItem, setSoldItem] = useState(false);
+  const [notEmpty, setNotEmpty] = useState(cartContext.length > 0);
 
   useEffect(() => {
     const tempTotal = cartContext.reduce((sum, currentId) => {
@@ -42,6 +43,8 @@ const Cart = ({ toggle }: Props) => {
     }, 0);
 
     setTotalPrice(tempTotal);
+
+    setNotEmpty(cartContext.length > 0);
   }, [cartContext]);
 
   useEffect(() => {
@@ -55,8 +58,6 @@ const Cart = ({ toggle }: Props) => {
     setPriceIds(ids);
   }, [cartContext]);
 
-  const notEmpty = cartContext.length > 0;
-
   return (
     <div className={styles.container}>
       {notEmpty ? (
@@ -65,13 +66,8 @@ const Cart = ({ toggle }: Props) => {
             const product = productsContext.find(
               (product) => product.id === id
             );
-            console.log(`product ${id}:`);
-            console.log(product);
 
             if (!product || product.sold === true) {
-              const tmpCart = [...cartContext];
-              setCartContext(tmpCart.filter((cartId) => cartId !== id));
-              setSoldItem(true);
               return <SoldShirt />;
             }
 
@@ -105,9 +101,9 @@ const CartShirt = ({ product }: CartShirtProps) => {
 
 const EmptyCart = ({ soldShirt }: EmptyCartProps) => {
   if (soldShirt) {
-    return <div>It looks like everything in your card has sold...</div>
+    return <div>It looks like everything in your card has sold...</div>;
   } else {
-    return <div>Your cart is empty. Add something?</div>
+    return <div>Your cart is empty. Add something?</div>;
   }
 };
 
