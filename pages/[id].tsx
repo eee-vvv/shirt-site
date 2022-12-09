@@ -10,6 +10,7 @@ import styles from '../styles/ProductPage.module.css';
 import productPic from '../public/fakeshirts/1.jpg';
 import Image from 'next/image';
 import { useAuth0 } from '@auth0/auth0-react'
+import AddToCartButton from '../components/AddToCartButton';
 
 type Props = {
   data: Product | null;
@@ -25,6 +26,8 @@ const ProductPage: NextPage<Props> = ({ data }: Props) => {
   if (product == null) {
     return <div>product not found</div>;
   }
+
+  console.log('product: ', product)
 
   return (
     <div>
@@ -70,7 +73,7 @@ function ProductInfo({ product }: ProductInfoProps) {
           <Image src={productPic} alt="todo" />
           <div className={styles.buttonGroup}>
             <div className={styles.price}>${product.price}</div>
-            <button className={styles.addToCartButton}>Add to Cart</button>
+            <AddToCartButton id={product.id} buttonContent="Add to Cart" />
           </div>
         </div>
         <div className={styles.informationContainer}>
