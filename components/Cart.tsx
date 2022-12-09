@@ -62,16 +62,16 @@ const Cart = ({ toggle }: Props) => {
     <div className={styles.container}>
       {notEmpty ? (
         <div className={styles.shirtList}>
-          {cartContext.map((id) => {
+          {cartContext.map((id, idx) => {
             const product = productsContext.find(
               (product) => product.id === id
             );
 
             if (!product || product.sold === true) {
-              return <SoldShirt />;
+              return <SoldShirt key={id} />;
             }
 
-            return <CartShirt key={product.id} product={product} />;
+            return <CartShirt key={id} product={product} />;
           })}
           <div>Total: ${totalPrice}</div>
         </div>
