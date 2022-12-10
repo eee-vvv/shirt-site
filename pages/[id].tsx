@@ -158,19 +158,17 @@ function EditProductForm({ product, setShowEdit }: EditProductFormProps) {
         />
       </div>
       <div>
-        <input
+        <textarea
           name="description"
           onChange={handleChange}
           value={editedProduct.description}
-          type="text"
         />
       </div>
       <div>
-        <input
+        <textarea
           name="measurements"
           onChange={handleChange}
           value={editedProduct.measurements}
-          type="text"
         />
       </div>
       <div>
