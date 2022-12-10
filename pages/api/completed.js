@@ -25,6 +25,20 @@ export default async function handler(req, res) {
         return;
       }
 
+      if (event.type === 'checkout.session.completed') {
+        const checkoutSession = event.data.object;
+
+        try {
+          // update database
+        } catch (error) {
+          res.status(400).send(error.message);
+          return;
+        }
+      } else {
+        res.status(400).send('Error: Unhandled event type');
+        return;
+      }
+
       res.status(200).json({ received: true });
     } catch (err) {
       console.error('error: ', err.message);
