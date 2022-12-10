@@ -98,20 +98,18 @@ const AddProductForm = () => {
         </div>
         <div>
           <label>Description</label>
-          <input
+          <textarea
             name="description"
             onChange={handleChange}
             value={product.description}
-            type="text"
           />
         </div>
         <div>
           <label>Measurements</label>
-          <input
+          <textarea
             name="measurements"
             onChange={handleChange}
             value={product.measurements}
-            type="text"
           />
         </div>
         <div>
