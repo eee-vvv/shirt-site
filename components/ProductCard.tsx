@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Product } from '../interfaces';
 import styles from '../styles/ProductCard.module.css';
 
@@ -16,30 +16,38 @@ type ProductCardProps = {
 };
 
 const ProductCard = ({ product }: ProductCardProps) => {
+  console.log('pcard!');
   const { id, name, price, imagesId } = product;
+  const [image, setImage] = useState('');
+  // listBuckets();
+  // getBucket('product-images');
 
-  let productImage;
+  const getImage = async () => {
+    console.log('in get image');
+    const response = await fetch(`/api/images/${id}`, {
+      method: 'GET',
+    });
 
-  // temporary
-  switch (id) {
-    case 1:
-      productImage = image1;
-      break;
-    case 2:
-      productImage = image2;
-      break;
-    case 3:
-      productImage = image3;
-      break;
-    case 4:
-      productImage = image4;
-      break;
-    case 5:
-      productImage = image5;
-      break;
-    default:
-      productImage = image1;
-  }
+    if (response.status === 200) {
+      const imageBlob = await response.blob();
+      console.log('blob: ', imageBlob);
+      const imageObjectURL = URL.createObjectURL(imageBlob);
+      setImage(imageObjectURL);
+    } else {
+      console.log('HTTP-Error: ' + response.status);
+    }
+  };
+
+  useEffect(() => {
+    getImage();
+  }, [id]);
+
+  const customImgLoader = ({ src }) => {
+    return `${src}`;
+  };
+
+  const productImage = image1;
+  console.log(image);
 
   return (
     <Link href={`/${id}`}>
@@ -48,9 +56,12 @@ const ProductCard = ({ product }: ProductCardProps) => {
           <div className={styles.name}>{name}</div>
           <div className={styles.price}>${price}</div>
           <Image
+            loader={customImgLoader}
             className={styles.image}
-            src={productImage}
+            src={image === '' ? productImage : image}
             alt="product image (replace with meaningful alt text)"
+            width={'300px'}
+            height={'300px'}
           />
         </div>
       </a>
