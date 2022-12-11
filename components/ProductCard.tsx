@@ -13,8 +13,8 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const { id, name, price, imagesId } = product;
   // listBuckets();
   // getBucket('product-images');
-  const productImage =
-    require(`../public/products-images/${id}/1.jpg`) || 'fallback';
+
+  const productImage = require(`../public/products-images/${id}/1.jpg`)
 
   const getImage = async () => {
     console.log('in get image');
