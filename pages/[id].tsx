@@ -92,7 +92,7 @@ function ProductInfo({ product }: ProductInfoProps) {
               return (
                 <div key={idx}>
                   <Image
-                    src={`/../public/products-images/${product.id}/${fileName}`}
+                    src={`/products-images/${product.id}/${fileName}`}
                     alt="todo"
                     width="343px"
                     height="400px"
