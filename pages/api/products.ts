@@ -64,7 +64,6 @@ export default async function allProductHandler(
         res.status(500).json({ error: 'product not found' });
         return;
       }
-      console.log('from db:', product);
       res.status(200).json({ products: [product] });
       break;
     default:

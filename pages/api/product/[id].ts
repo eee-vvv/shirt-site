@@ -53,7 +53,6 @@ export default async function singleProductHandler(
       if (!stripeProduct) {
         throw 'Stripe product edit failed. Please try again.';
       }
-      console.log('stripe product: ', stripeProduct);
 
       const editedProduct = await handleEditProduct({
         ...body,

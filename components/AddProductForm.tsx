@@ -28,7 +28,6 @@ const AddProductForm = () => {
       isNaN(parseInt(target.value)) &&
       target.value != ''
     ) {
-      console.log(target.value);
       tempProduct[target.name as keyof JSONProduct] = '';
       alert('please enter a number');
     } else {
@@ -40,7 +39,6 @@ const AddProductForm = () => {
   const handleSubmit = (e: React.SyntheticEvent) => {
     // TODO: add validateProduct
     e.preventDefault();
-    console.log('submitting!');
     const productToSubmit = {
       ...product,
       price: parseInt(product.price),
@@ -59,7 +57,6 @@ const AddProductForm = () => {
       .catch((e) => {
         console.log('something went wrong (CATCH)...');
       });
-    console.log('new product response in handleSubmit: ', newProductRes);
   };
 
   const postNewProductToDatabase = async (product: NewProduct) => {

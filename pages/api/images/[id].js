@@ -21,7 +21,6 @@ export default async function imageRequestHandler(req, res) {
   switch (req.method) {
     case 'GET':
       try {
-        console.log('in GET');
         const dir = path.resolve('./public/products-images', query.id);
         const files = fs.readdirSync(dir);
         res.status(200).json({ fileNames: files });
