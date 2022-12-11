@@ -42,6 +42,25 @@ export default async function handler(req, res) {
         );
         const lineItems = sessionWithLineItems.line_items.data;
 
+        // expire all other sessions that have the same line items
+        // const allSessions = await stripe.checkout.sessions.list({});
+        // allSessions.data.forEach(async (ses) => {
+        //   const sesWithLineItems = await stripe.checkout.sessions.retrieve(
+        //     ses.id,
+        //     {
+        //       expand: ['line_items'],
+        //     }
+        //   );
+        //   const items = sesWithLineItems.line_items.data;
+        //   items.forEach((item) => {
+        //     lineItems.forEach(async (lineItem) => {
+        //       if (lineItem.price.product === item.price.prodcut) {
+        //         await stripe.checkout.sessions.expire(ses.id);
+        //       }
+        //     });
+        //   });
+        // });
+
         try {
           lineItems.forEach((item) => {
             archiveProduct(item.price.product)
