@@ -1,4 +1,4 @@
-import { Client, QueryResult } from 'pg';
+import { Client, QueryResult, Pool } from 'pg';
 import type { Product, NewProduct } from '../interfaces';
 import { useRouter } from 'next/router';
 
@@ -12,13 +12,15 @@ async function clientConnect(): Promise<Client | Error> {
   }
 }
 
+const pool = new Pool()
+
 export async function handleGetUnsoldProducts(): Promise<Product[] | null> {
   try {
     const client = await clientConnect();
     if (client instanceof Error) {
       throw client;
     }
-    const products = await client.query(`
+    const products = await pool.query(`
         SELECT id, name, price, measurements, description, sold, imagesId, stripepriceid, stripeproductid
         FROM product
         WHERE sold = false;`);
@@ -35,7 +37,7 @@ export async function handleGetProduct(id: number): Promise<Product | null> {
     if (client instanceof Error) {
       throw client;
     }
-    const res = await client.query(
+    const res = await pool.query(
       `
       SELECT id, name, price, measurements, description, sold, imagesId, stripepriceid, stripeproductid
       FROM product
@@ -57,7 +59,7 @@ export async function handleGetProductByStripeProductId(
     if (client instanceof Error) {
       throw client;
     }
-    const res = await client.query(
+    const res = await pool.query(
       `
       SELECT id, name, price, measurements, description, sold, imagesId, stripepriceid, stripeproductid
       FROM product
@@ -77,7 +79,7 @@ export async function handleDeleteProduct(id: number): Promise<number | null> {
     if (client instanceof Error) {
       throw client;
     }
-    const res = await client.query(
+    const res = await pool.query(
       `
       DELETE FROM product
       WHERE id = $1;`,
@@ -108,7 +110,7 @@ export async function handlePostProduct(
       p.stripepriceid === '' ? null : p.stripepriceid,
       p.stripeproductid === '' ? null : p.stripeproductid,
     ];
-    const res = await client.query(
+    const res = await pool.query(
       `INSERT INTO product (
         name,
         price,
@@ -148,7 +150,7 @@ export async function handleEditProduct(p: Product): Promise<Product | null> {
       p.stripeproductid,
       p.stripepriceid,
     ];
-    const res = await client.query(
+    const res = await pool.query(
       `UPDATE product
     SET
     name = $2,
@@ -179,7 +181,7 @@ export async function handleMarkProductAsSold(
     if (client instanceof Error) {
       throw client;
     }
-    const res = await client.query(
+    const res = await pool.query(
       `UPDATE product
     SET
     sold = true
