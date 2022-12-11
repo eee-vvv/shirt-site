@@ -12,7 +12,7 @@ async function clientConnect(): Promise<Client | Error> {
   }
 }
 
-const pool = new Pool()
+const pool = new Pool({ max: 20, idleTimeoutMillis: 1000 });
 
 export async function handleGetUnsoldProducts(): Promise<Product[] | null> {
   try {
