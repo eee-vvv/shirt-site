@@ -42,6 +42,7 @@ export default async function handler(req, res) {
         const lineItems = sessionWithLineItems.line_items.data;
 
         // expire all other sessions that have the same line items
+
         // const allSessions = await stripe.checkout.sessions.list({});
         // allSessions.data.forEach(async (ses) => {
         //   const sesWithLineItems = await stripe.checkout.sessions.retrieve(
