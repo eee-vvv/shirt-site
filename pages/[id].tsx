@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import type { NextPage, GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -9,8 +9,10 @@ import styles from '../styles/ProductPage.module.css';
 
 import productPic from '../public/fakeshirts/1.jpg';
 import Image from 'next/image';
-import { useAuth0 } from '@auth0/auth0-react'
+import { useAuth0 } from '@auth0/auth0-react';
 import AddToCartButton from '../components/AddToCartButton';
+import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 
 type Props = {
   data: Product | null;
@@ -27,13 +29,11 @@ const ProductPage: NextPage<Props> = ({ data }: Props) => {
     return <div>product not found</div>;
   }
 
-  console.log('product: ', product)
-
   return (
     <div>
-{isAuthenticated &&
-      <ToggleEditButton showEdit={showEdit} setShowEdit={setShowEdit} />
- }
+      {isAuthenticated && (
+        <ToggleEditButton showEdit={showEdit} setShowEdit={setShowEdit} />
+      )}
       {showEdit ? (
         <EditProductForm product={product} setShowEdit={setShowEdit} />
       ) : (
@@ -65,12 +65,42 @@ type ProductInfoProps = {
 // TODO: carousel for multiple images
 
 function ProductInfo({ product }: ProductInfoProps) {
+  const [fileNames, setFileNames] = useState<string[]>([]);
+
+  useEffect(() => {
+    getFileNames();
+  }, [product.id]);
+
+  const getFileNames = async () => {
+    const response = await fetch(`/api/images/${product.id}`, {
+      method: 'GET',
+    });
+
+    if (response.status === 200) {
+      const result = await response.json();
+      setFileNames(result.fileNames);
+    }
+  };
+
   return (
     <div className="page-container">
       <h2>{product.name}</h2>
       <div className={styles.container}>
         <div className={styles.imageContainer}>
-          <Image src={productPic} alt="todo" />
+          <Carousel showStatus={false}>
+            {fileNames.map((fileName, idx) => {
+              return (
+                <div key={idx}>
+                  <Image
+                    src={`/../public/products-images/${product.id}/${fileName}`}
+                    alt="todo"
+                    width="343px"
+                    height="400px"
+                  />
+                </div>
+              );
+            })}
+          </Carousel>
           <div className={styles.buttonGroup}>
             <div className={styles.price}>${product.price}</div>
             <AddToCartButton id={product.id} buttonContent="Add to Cart" />
