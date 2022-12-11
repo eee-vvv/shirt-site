@@ -7,12 +7,14 @@ export default function Logo() {
   return (
     <div className={styles.container}>
       <Link href="/">
-        <Image
-          src={logo}
-          alt="alt text TODO"
-          width={'100px'}
-          height={'100px'}
-        />
+        <a>
+          <Image
+            src={logo}
+            alt="alt text TODO"
+            width={'100px'}
+            height={'100px'}
+          />
+        </a>
       </Link>
     </div>
   );
