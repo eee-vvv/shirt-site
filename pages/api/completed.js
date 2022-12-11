@@ -1,5 +1,11 @@
+import { Client } from 'pg';
+import {
+  handleGetProductByStripeProductId,
+  handleMarkProductAsSold,
+} from '../../db/queryHandlers';
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 import getRawBody from 'raw-body';
+import { archiveProduct } from '../../lib/stripe';
 const endpointSecret = process.env.STRIPE_ENDPOINT_SECRET;
 
 export const config = {
@@ -27,9 +33,37 @@ export default async function handler(req, res) {
 
       if (event.type === 'checkout.session.completed') {
         const checkoutSession = event.data.object;
+        console.log('id: ', checkoutSession.id);
+        const sessionWithLineItems = await stripe.checkout.sessions.retrieve(
+          checkoutSession.id,
+          {
+            expand: ['line_items'],
+          }
+        );
+        const lineItems = sessionWithLineItems.line_items.data;
 
         try {
-          // update database
+          lineItems.forEach((item) => {
+            archiveProduct(item.price.product)
+              .then((archivedProduct) => {
+                handleGetProductByStripeProductId(archivedProduct.id)
+                  .then((product) => {
+                    console.log('product: ', product);
+                    handleMarkProductAsSold(product.id).then((product) => {
+                      console.log('done!: ', product.id);
+                    });
+                  })
+                  .catch((e) => {
+                    console.error(
+                      'Error fetching product to mark as sold: ',
+                      item.price.product
+                    );
+                  });
+              })
+              .catch((e) => {
+                console.error('Error archiving product: ', item.product);
+              });
+          });
         } catch (error) {
           res.status(400).send(error.message);
           return;

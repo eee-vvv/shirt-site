@@ -49,6 +49,28 @@ export async function handleGetProduct(id: number): Promise<Product | null> {
   }
 }
 
+export async function handleGetProductByStripeProductId(
+  id: string
+): Promise<Product | null> {
+  try {
+    const client = await clientConnect();
+    if (client instanceof Error) {
+      throw client;
+    }
+    const res = await client.query(
+      `
+      SELECT id, name, price, measurements, description, sold, imagesId, stripepriceid, stripeproductid
+      FROM product
+      WHERE stripeproductid = $1;`,
+      [id]
+    );
+    return res.rows[0];
+  } catch (e) {
+    console.error('error in /api/product/[id] handleGet method: ', e);
+    return null;
+  }
+}
+
 export async function handleDeleteProduct(id: number): Promise<number | null> {
   try {
     const client = await clientConnect();
@@ -141,6 +163,30 @@ export async function handleEditProduct(p: Product): Promise<Product | null> {
     RETURNING *
     ;`,
       values
+    );
+    return res.rows[0];
+  } catch (e) {
+    console.error('error in /api/product/id handleEdit method: ', e);
+    return null;
+  }
+}
+
+export async function handleMarkProductAsSold(
+  id: number
+): Promise<Product | null> {
+  try {
+    const client = await clientConnect();
+    if (client instanceof Error) {
+      throw client;
+    }
+    const res = await client.query(
+      `UPDATE product
+    SET
+    sold = true
+    WHERE id = $1
+    RETURNING *
+    ;`,
+      [id]
     );
     return res.rows[0];
   } catch (e) {
