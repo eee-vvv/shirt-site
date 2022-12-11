@@ -68,7 +68,6 @@ function ProductInfo({ product }: ProductInfoProps) {
   const [fileNames, setFileNames] = useState<string[]>([]);
 
   useEffect(() => {
-    console.log('use effect');
     getFileNames();
   }, [product.id]);
 
@@ -77,16 +76,11 @@ function ProductInfo({ product }: ProductInfoProps) {
       method: 'GET',
     });
 
-    console.log('response: ', response);
-
     if (response.status === 200) {
       const result = await response.json();
-      console.log('result: ', result);
       setFileNames(result.fileNames);
     }
   };
-
-  console.log('filenames: ', fileNames);
 
   return (
     <div className="page-container">
