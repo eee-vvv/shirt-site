@@ -87,7 +87,7 @@ function ProductInfo({ product }: ProductInfoProps) {
       <h2>{product.name}</h2>
       <div className={styles.container}>
         <div className={styles.imageContainer}>
-          <Carousel>
+          <Carousel showStatus={false}>
             {fileNames.map((fileName, idx) => {
               return (
                 <div key={idx}>
