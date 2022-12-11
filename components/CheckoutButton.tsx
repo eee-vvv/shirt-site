@@ -24,7 +24,6 @@ const CheckoutButton = ({ priceIds }: Props) => {
     }
   }, []);
 
-  console.log('price ids: ', priceIds);
 
   const handleCheckout = async () => {
     const stripe = await stripePromise;
@@ -42,7 +41,7 @@ const CheckoutButton = ({ priceIds }: Props) => {
           sessionId: id,
         })
         .then((result) => {
-          console.log('result: ', result);
+          // console.log('result: ', result);
         })
         .catch((e) => {
           console.error(e);

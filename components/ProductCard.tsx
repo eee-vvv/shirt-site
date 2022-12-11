@@ -9,26 +9,23 @@ type ProductCardProps = {
 };
 
 const ProductCard = ({ product }: ProductCardProps) => {
-  console.log('pcard!');
   const { id, name, price, imagesId } = product;
   // listBuckets();
   // getBucket('product-images');
 
-  const productImage = require(`../public/products-images/${id}/1.jpg`)
+  const productImage = require(`../public/products-images/${id}/1.jpg`);
 
   const getImage = async () => {
-    console.log('in get image');
     const response = await fetch(`/api/images/${id}`, {
       method: 'GET',
     });
 
     if (response.status === 200) {
       const imageBlob = await response.blob();
-      console.log('blob: ', imageBlob);
       const imageObjectURL = URL.createObjectURL(imageBlob);
       // setImage(imageObjectURL);
     } else {
-      console.log('HTTP-Error: ' + response.status);
+      console.error('HTTP-Error: ' + response.status);
     }
   };
 

@@ -1,5 +1,11 @@
+import { Client } from 'pg';
+import {
+  handleGetProductByStripeProductId,
+  handleMarkProductAsSold,
+} from '../../db/queryHandlers';
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 import getRawBody from 'raw-body';
+import { archiveProduct } from '../../lib/stripe';
 const endpointSecret = process.env.STRIPE_ENDPOINT_SECRET;
 
 export const config = {
@@ -27,9 +33,54 @@ export default async function handler(req, res) {
 
       if (event.type === 'checkout.session.completed') {
         const checkoutSession = event.data.object;
+        const sessionWithLineItems = await stripe.checkout.sessions.retrieve(
+          checkoutSession.id,
+          {
+            expand: ['line_items'],
+          }
+        );
+        const lineItems = sessionWithLineItems.line_items.data;
+
+        // expire all other sessions that have the same line items
+        // const allSessions = await stripe.checkout.sessions.list({});
+        // allSessions.data.forEach(async (ses) => {
+        //   const sesWithLineItems = await stripe.checkout.sessions.retrieve(
+        //     ses.id,
+        //     {
+        //       expand: ['line_items'],
+        //     }
+        //   );
+        //   const items = sesWithLineItems.line_items.data;
+        //   items.forEach((item) => {
+        //     lineItems.forEach(async (lineItem) => {
+        //       if (lineItem.price.product === item.price.prodcut) {
+        //         await stripe.checkout.sessions.expire(ses.id);
+        //       }
+        //     });
+        //   });
+        // });
 
         try {
-          // update database
+          lineItems.forEach((item) => {
+            archiveProduct(item.price.product)
+              .then((archivedProduct) => {
+                handleGetProductByStripeProductId(archivedProduct.id)
+                  .then((product) => {
+                    handleMarkProductAsSold(product.id).then((product) => {
+                      console.log('done!: ', product.id);
+                    });
+                  })
+                  .catch((e) => {
+                    console.error(
+                      'Error fetching product to mark as sold: ',
+                      item.price.product
+                    );
+                  });
+              })
+              .catch((e) => {
+                console.error('Error archiving product: ', item.product);
+              });
+          });
         } catch (error) {
           res.status(400).send(error.message);
           return;

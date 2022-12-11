@@ -124,8 +124,6 @@ function EditProductForm({ product, setShowEdit }: EditProductFormProps) {
   const router = useRouter();
   const [editedProduct, setEditedProduct] = useState({ ...product });
 
-  console.log('edited product: ', editedProduct);
-
   const handleChange = (e: React.FormEvent) => {
     const target = e.target as HTMLTextAreaElement;
     let val: any = target.value;
@@ -164,7 +162,6 @@ function EditProductForm({ product, setShowEdit }: EditProductFormProps) {
       .catch((e) => {
         console.log('something went wrong (catch) --> ', e);
       });
-    console.log('new product response in handleSubmit: ', editedProductRes);
     setShowEdit((prev: Boolean) => !prev);
   };
 
