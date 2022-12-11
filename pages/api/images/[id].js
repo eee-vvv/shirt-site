@@ -2,7 +2,7 @@ import stream from 'stream';
 import { promisify } from 'util';
 import { getMainProductImage } from '../../../lib/supabase';
 const fs = require('fs');
-import path from 'path'
+import path from 'path';
 
 const pipeline = promisify(stream.pipeline);
 
@@ -21,8 +21,8 @@ export default async function imageRequestHandler(req, res) {
   switch (req.method) {
     case 'GET':
       try {
-        console.log('in GET')
-        const dir = path.resolve('./public/products-images', query.id)
+        console.log('in GET');
+        const dir = path.resolve('./public/products-images', query.id);
         const files = fs.readdirSync(dir);
         res.status(200).json({ fileNames: files });
       } catch (e) {
