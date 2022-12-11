@@ -23,8 +23,9 @@ export default async function allProductHandler(
           if (!products) {
             res.status(500).json({ error: 'failed to get products from db' });
             return;
+          } else {
+            return res.status(200).json({ products: products });
           }
-          res.status(200).json({ products: products });
         })
         .catch((e) => console.log(e));
       break;
