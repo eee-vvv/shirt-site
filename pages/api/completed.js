@@ -1,4 +1,3 @@
-import { Client } from 'pg';
 import {
   handleGetProductByStripeProductId,
   handleMarkProductAsSold,
