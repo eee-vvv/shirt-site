@@ -54,7 +54,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
               className={styles.image}
               src={productImage}
               alt="product image (replace with meaningful alt text)"
-              width={'300px'}
+              width={'258px'}
               height={'300px'}
             />
           )}
