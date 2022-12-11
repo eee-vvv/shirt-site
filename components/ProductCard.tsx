@@ -36,9 +36,9 @@ const ProductCard = ({ product }: ProductCardProps) => {
   //   getImage();
   // }, [id]);
 
-  const customImgLoader = ({ src }) => {
-    return `${src}`;
-  };
+  // const customImgLoader = ({ src }) => {
+  //   return `${src}`;
+  // };
 
   return (
     <Link href={`/${id}`}>
@@ -50,7 +50,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             <div>No image</div>
           ) : (
             <Image
-              loader={customImgLoader}
+              // loader={customImgLoader}
               className={styles.image}
               src={productImage}
               alt="product image (replace with meaningful alt text)"
