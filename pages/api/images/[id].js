@@ -1,6 +1,8 @@
 import stream from 'stream';
 import { promisify } from 'util';
 import { getMainProductImage } from '../../../lib/supabase';
+const fs = require('fs');
+import path from 'path'
 
 const pipeline = promisify(stream.pipeline);
 
@@ -18,27 +20,13 @@ export default async function imageRequestHandler(req, res) {
 
   switch (req.method) {
     case 'GET':
-      let data;
-      if (body.all) {
-        // data = handleGetAll(id);
-        // if (data.error) {
-        //   res.status(400).send('Error fetching image. It may not exist.');
-        //   return;
-        // } else {
-        //   data.arrayBuffer().then((buf) => {
-        //     res.send(Buffer.from(buf));
-        //   });
-        // }
-      } else {
-        data = await handleGetPrimary(id);
-        if (data.error) {
-          res.status(400).send('Error fetching image. It may not exist.');
-          return;
-        } else {
-          res.setHeader('Content-Type', 'image/jpeg');
-          res.status(200).send(data.arrayBuffer());
-          return;
-        }
+      try {
+        console.log('in GET')
+        const dir = path.resolve('./public/products-images', query.id)
+        const files = fs.readdirSync(dir);
+        res.status(200).json({ fileNames: files });
+      } catch (e) {
+        res.status(400).send(`Error: ${e}`);
       }
       break;
     default:
@@ -46,13 +34,3 @@ export default async function imageRequestHandler(req, res) {
       res.status(405).end(`Method ${method} Not Allowed`);
   }
 }
-
-const handleGetPrimary = async (productId) => {
-  const data = await getMainProductImage(productId);
-  return data;
-};
-
-const handleGetAll = async (productId) => {
-  const data = await getMainProductImage(productId);
-  return data;
-};

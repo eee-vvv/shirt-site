@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import type { NextPage, GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -12,6 +12,7 @@ import Image from 'next/image';
 import { useAuth0 } from '@auth0/auth0-react';
 import AddToCartButton from '../components/AddToCartButton';
 import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 
 type Props = {
   data: Product | null;
@@ -64,29 +65,48 @@ type ProductInfoProps = {
 // TODO: carousel for multiple images
 
 function ProductInfo({ product }: ProductInfoProps) {
-  // const images = importAll(
-  //   require.context(
-  //     `../public/products-images/${product.id}`,
-  //     false,
-  //     /\.(png|jpe?g|svg)$/
-  //   )
-  // );
+  const [fileNames, setFileNames] = useState<string[]>([]);
+
+  useEffect(() => {
+    console.log('use effect');
+    getFileNames();
+  }, [product.id]);
+
+  const getFileNames = async () => {
+    const response = await fetch(`/api/images/${product.id}`, {
+      method: 'GET',
+    });
+
+    console.log('response: ', response);
+
+    if (response.status === 200) {
+      const result = await response.json();
+      console.log('result: ', result);
+      setFileNames(result.fileNames);
+    }
+  };
+
+  console.log('filenames: ', fileNames);
 
   return (
     <div className="page-container">
       <h2>{product.name}</h2>
       <div className={styles.container}>
         <div className={styles.imageContainer}>
-          {
-            <div>
-              <Image
-                src={`/../public/products-images/${product.id}/1.jpg`}
-                alt="todo"
-                width="343px"
-                height="400px"
-              />
-            </div>
-          }
+          <Carousel>
+            {fileNames.map((fileName, idx) => {
+              return (
+                <div key={idx}>
+                  <Image
+                    src={`/../public/products-images/${product.id}/${fileName}`}
+                    alt="todo"
+                    width="343px"
+                    height="400px"
+                  />
+                </div>
+              );
+            })}
+          </Carousel>
           <div className={styles.buttonGroup}>
             <div className={styles.price}>${product.price}</div>
             <AddToCartButton id={product.id} buttonContent="Add to Cart" />
