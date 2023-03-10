@@ -36,7 +36,6 @@ const ProductCard = ({ product }: ProductCardProps) => {
   // const customImgLoader = ({ src }) => {
   //   return `${src}`;
   // };
-
   return (
     <Link href={`/${id}`}>
       <a>
