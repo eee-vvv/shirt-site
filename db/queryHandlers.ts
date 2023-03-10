@@ -21,7 +21,7 @@ export async function handleGetUnsoldProducts(): Promise<Product[] | null> {
       throw client;
     }
     const products = await pool.query(`
-        SELECT id, name, price, measurements, description, sold, imagesId, stripepriceid, stripeproductid
+        SELECT id, name, price, measurements, description, sold, imagesId, stripepriceid, stripeproductid, updated_at
         FROM product
         WHERE sold = false;`);
     return products.rows;
@@ -139,6 +139,7 @@ export async function handleEditProduct(p: Product): Promise<Product | null> {
     if (client instanceof Error) {
       throw client;
     }
+    const currentDate = new Date().toISOString();
     let values = [
       p.id,
       p.name,
@@ -149,6 +150,7 @@ export async function handleEditProduct(p: Product): Promise<Product | null> {
       p.imagesId,
       p.stripeproductid,
       p.stripepriceid,
+      currentDate,
     ];
     const res = await pool.query(
       `UPDATE product
@@ -160,7 +162,8 @@ export async function handleEditProduct(p: Product): Promise<Product | null> {
     sold = $6,
     imagesId = $7,
     stripeproductid = $8,
-    stripepriceid = $9
+    stripepriceid = $9,
+    updated_at = $10
     WHERE id = $1
     RETURNING *
     ;`,

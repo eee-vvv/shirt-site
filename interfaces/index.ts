@@ -9,6 +9,7 @@ export type Product = {
   description: string;
   sold: boolean;
   imagesId: string;
+  updated_at: string;
   stripepriceid?: string;
   stripeproductid?: string;
 };

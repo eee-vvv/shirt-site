@@ -122,6 +122,7 @@ type EditProductFormProps = {
 
 function EditProductForm({ product, setShowEdit }: EditProductFormProps) {
   const router = useRouter();
+  const currentDate = new Date().toISOString()
   const [editedProduct, setEditedProduct] = useState({ ...product });
 
   const handleChange = (e: React.FormEvent) => {

@@ -31,6 +31,10 @@ const Home: NextPage = () => {
     setShowProductForm((prev) => !prev);
   };
 
+  const sortedProducts = products.sort((one, two) =>
+    one.updated_at > two.updated_at ? -1 : 1
+  );
+
   return (
     <div>
       <Head>
