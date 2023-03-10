@@ -36,8 +36,6 @@ const ProductCard = ({ product }: ProductCardProps) => {
   // const customImgLoader = ({ src }) => {
   //   return `${src}`;
   // };
-console.log('product: ', product)
-
   return (
     <Link href={`/${id}`}>
       <a>
